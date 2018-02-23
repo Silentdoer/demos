@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <bean id="stud1" class="me.silentdoer.simulatespring.pojo.Student"/>
+    <bean id="str1" class="java.lang.String" scope="singleton" lazy-init="true">
+        <constructor-arg value="UUUUUUUU" type="java.lang.String"/>
+    </bean>
+    <bean id="stud2" class="me.silentdoer.simulatespring.pojo.Student">
+        <constructor-arg name="uid" value="500" type="java.lang.Long"/>
+        <constructor-arg name="gender" ref="str1" type="java.lang.String"/>
+        <property name="name" value="Hello" type="java.lang.String"/>
+    </bean>
+
+</beans>

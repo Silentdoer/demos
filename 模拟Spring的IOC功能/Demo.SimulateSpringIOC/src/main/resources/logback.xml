@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 注意：对于在classpath下的logback.xml或logback-test.xml是不需要对Logback设置配置文件路径的，它会自动扫描classpath的这几个文件名 -->
+<!-- scan配置是否自动检测配置文件的修改，debug则是表示是否打印logback内部日志 -->
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <!-- 用于区分不同的应用程序 -->
+    <contextName>
+        SimulateIOC
+    </contextName>
+
+    <!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[LevelName:%-5level] %d{yyyy-MM-dd#HH:mm:ss.SSS} [ThreadName:%thread] [LoggerName:%logger] -> %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- DEBUG级别日志 appender -->
+    <appender name="debug2File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只记录DEBUG级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>%d{yyyy-MM-dd}/debug-log.log
+            </fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- root配置的Appender会自动添加到所有的logger里，root相当于基类，故root添加了ConsoleAppender则子类最好就不要有了
+     故root也最好不要有FileAppender这些有个共同的ConsoleAppender即可，可以通过additivity来取消调用root的appender -->
+    <logger name="myLogger" level="debug" additivity="false">
+        <!--指定日志输出方式，引用定义的appender-->
+        <appender-ref ref="console" />
+        <appender-ref ref="debug2File"/>
+    </logger>
+
+    <!-- 日志级别 -->
+    <root>
+        <level value="error" />
+        <appender-ref ref="console" />
+    </root>
+
+</configuration>
