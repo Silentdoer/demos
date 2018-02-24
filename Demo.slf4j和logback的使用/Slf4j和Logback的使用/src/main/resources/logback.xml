@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 配置文件名称为logback.xml的话在使用logback时是不需要指定配置文件路径的，能够被自动扫描 -->
+<!-- scan表示是否自动扫描配置的更改，debug表示是否打印logback内部的日志（但是配置有问题时logback自动会打印初始化信息） -->
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <contextName>logbackUsage</contextName>
+
+    <property name="log-file-home" value="E:/logs" />
+    <property name="maxHistory" value="180"/>
+
+    <!-- 控制台输出的Appender，没有配置filter则处理所有来自Logger的日志事件（但是日志事件会先由Logger过滤） -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 日志输出格式，%level，%d，%thread，%logger，%msg，%n -->
+            <pattern>[Level:%-5level] %d{yyyy-MM-dd#HH:mm:ss.SSS} [Thread:%thread] [Logger:%logger] -> %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- DEBUG级别日志 appender -->
+    <appender name="debug2File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只处理DEBUG级别的日志（精确匹配），如果要处理多个级别则可以定义多个过滤器并修改onMatch等的值 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <!-- 这个是当有多个filter时才有用，ACCEPT表示如果此filter match，则不再继续其它的filter进行匹配操作而直接处理
+            ，DENY表示不再经过其它filter而直接抛弃此记录事件，而NEUTRAL则继续由其它filter处理记录事件 -->
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!--<file>${user.dir}/logs/debug/debug.log</file>-->
+        <!-- 日志文件rolling策略，基于文件大小和时间 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名的Pattern，d是日期，i是index值（用于同一天但是日志超出大小） -->
+            <!-- 应该指定路径，而不能直接在下面用相对路径，否则会出现不合预期的情况 -->
+            <!-- 也可以用catalina.base，user.dir这些环境变量 -->
+            <fileNamePattern>${user.dir}/logs/debug/debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>3MB</maxFileSize>
+            <!-- 日志最大的历史，单位：天-->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+
+        <!-- layout和encoder都可以，但是layout是过时的不要用 -->
+        <encoder>
+            <!-- 日志输出格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 默认情况下root的Appender会作为观察者添加到子logger里，比如这里的myLogger
+    ，哪怕子logger里已经有了这个Appender对象，可以通过配置additivity="false"来避免；
+     这个不是像网上说的由子logger处理后再请求root处理，因为Level不匹配root的还是输出了-->
+    <!-- 如果没设置等级，将继承上级root的等级 -->
+    <logger name="myLogger" level="debug" additivity="false">
+        <!--logger的log行为的观察者appender-->
+        <appender-ref ref="console" />
+        <appender-ref ref="debug2File"/>
+    </logger>
+
+    <!-- 日志级别包括：TRACE、DEBUG、INFO、WARN和ERROR，默认情况下级别是DEBUG（不区分大小写） -->
+    <root>
+        <level value="error" />
+        <appender-ref ref="console" />
+    </root>
+
+</configuration>
