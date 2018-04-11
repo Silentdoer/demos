@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>me.silentdoer</groupId>
+    <artifactId>proj-separate-wcs</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <!--<packaging>war</packaging>-->
+    <name>Silentdoer</name>
+    <description>实现自己的WMS以便能够分离WCS</description>
+
+    <developers>
+        <developer>
+            <id>Silentdoer</id>
+            <name>Mr.Wang</name>
+            <email>1010993610@qq.com</email>
+            <roles>
+                <role>C# Engineer</role>
+                <role>Java Engineer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <finalName>contextName</finalName>
+    </build>
+
+    <properties>
+        <spring.group>org.springframework</spring.group>
+        <spring.version>4.3.4.RELEASE</spring.version>
+
+        <logback.group>ch.qos.logback</logback.group>
+        <logback.version>1.2.3</logback.version>
+
+        <slf4j.group>org.slf4j</slf4j.group>
+        <slf4j.version>1.7.25</slf4j.version>
+
+        <mybatis.group>org.mybatis</mybatis.group>
+        <mybatis.version>3.4.4</mybatis.version>
+        <mybatis-spring.version>1.3.1</mybatis-spring.version>
+
+        <mysql.group>mysql</mysql.group>
+        <mysql-connector.version>5.1.41</mysql-connector.version>
+
+        <alibaba.group>com.alibaba</alibaba.group>
+        <druid.version>1.1.6</druid.version>
+        <fastjson.version>1.2.41</fastjson.version>
+
+        <dom4j.group>dom4j</dom4j.group>
+        <dom4j.version>1.6.1</dom4j.version>
+
+        <junit.group>junit</junit.group>
+        <junit.version>4.12</junit.version>
+    </properties>
+
+    <dependencies>
+        <!-- 不要加这个，而应该是直接在Module里添加Dependencies为Tomcat，不同版本的Tomcat虽然都遵循7.0，但是具体实现可能不一样 -->
+        <!--<dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <!# provided 表示只是编译时提供，运行时不需要（因为Tomcat里自带了）#>
+            <scope>provided</scope>
+        </dependency>-->
+
+        <!-- spring-framework begin -->
+        <!--<dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+// oxm is object<—>xml mapping，即将pojo转换为xml或将xml转换为pojo对象，有XStream估计没用了；
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+// orm is object relation mapping，就类似Hibernate的功能，可以不用
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+            // 还有websocket、jms(messaging一起)可能会用到
+        </dependency>-->
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+            <!-- scope 默认是compile的 -->
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- 单元测试时有用 -->
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- spring-framework end -->
+
+        <!-- log begin -->
+        <dependency>
+            <groupId>${slf4j.group}</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${logback.group}</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${logback.group}</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <!-- log end -->
+
+        <!-- database begin -->
+        <dependency>
+            <groupId>${mybatis.group}</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${mybatis.group}</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${mysql.group}</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${alibaba.group}</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <!-- database end -->
+
+        <!-- tool begin -->
+        <dependency>
+            <groupId>${alibaba.group}</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${dom4j.group}</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.9</version>
+        </dependency>
+        <!-- 这个版本的可以不用再添加asm的jar包 -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <!-- tool end -->
+
+        <!-- 其它可能用到的jar包 begin -->
+        <!-- <dependency>
+          <groupId>axis</groupId>
+          <artifactId>axis</artifactId>
+          <version>1.4</version>
+      </dependency> -->
+
+        <!-- <dependency>
+            <groupId>org.apache.axis2.wso2</groupId>
+            <artifactId>axis2</artifactId>
+            <version>1.6.1.wso2v10</version>
+        </dependency> -->
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.8.9</version>
+        </dependency>-->
+
+        <!--<dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>-->
+        <!-- 其它可能用到的jar包 end -->
+
+        <!-- 用于测试 begin -->
+        <dependency>
+            <groupId>${junit.group}</groupId>
+            <artifactId>junit</artifactId>
+            <!-- version据说还可以是一个范围值 -->
+            <version>${junit.version}</version>
+            <!-- 表示这个jar包是用于测试，打包时不会将此jar包打包进去 -->
+            <scope>test</scope>
+        </dependency>
+        <!-- 用于测试 end -->
+
+        <!-- 依赖jar包依赖的组件 begin-->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+            <!-- compile 表示编译时和运行时都需要（但IDE可能有bug，不行的话还是自己主动将jar包放到lib目录 -->
+            <scope>compile</scope>
+        </dependency>
+        <!-- 依赖jar包依赖的组件 end-->
+    </dependencies>
+
+</project>

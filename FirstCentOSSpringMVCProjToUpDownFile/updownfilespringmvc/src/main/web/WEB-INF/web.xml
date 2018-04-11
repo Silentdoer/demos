@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <servlet>
+        <servlet-name>uploaddownloadfile</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/applicationContext.xml</param-value>
+        </init-param>
+        <!-- default class is XmlWebApplicationContext, but we can choose other class like this -->
+        <!--<init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.context.annotation.AnnotationConfigApplicationContext</param-value>
+        </init-param>-->
+        <load-on-startup>1</load-on-startup>
+        <!-- we need to given this config to tell tomcat/context that this servlet is a Multipart resolver.
+         it's also can annotate the servlet class, but DispatcherServlet is a class in jar so we config here, or extends DispatcherServlet-->
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>uploaddownloadfile</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>
