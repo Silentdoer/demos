@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.silentdoer</groupId>
+    <artifactId>spring-boot-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- 配置parent，这个就像applicationContext.xml里配置的一样，作为其它子元素的抽象父元素，但是允许子元素重写配置 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!-- 注意大小写 -->
+        <version>1.5.7.RELEASE</version>
+        <relativePath/>
+    </parent>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+        <java.version>1.8</java.version>
+        <bootgi>org.springframework.boot</bootgi>
+    </properties>
+    <dependencies>
+        <dependency>
+            <!-- 由于上面配置了parent，故这里只需要配置那些需要覆写的即可(groupId还是得有)，这个包里有包括web所需的所有SpringMVC的jar包 -->
+            <!-- groupId需要的原因可以理解为是因为在repository里需要知道怎么放置artifact -->
+            <groupId>${bootgi}</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${bootgi}</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>true</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>${bootgi}</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- eclipse 似乎要添加fork配置？？ -->
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
