@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--<tx:annotation-driven transaction-manager="txManager" />-->
+
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- transaction -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- first * is all visit qualifier -->
+    <!-- aop -->
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* me.silentdoer.ssmdemo.dao.impl.StudentDaoImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+    <!-- datasource, can be replace with Druid -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/db_test"/>
+        <property name="username" value="test"/>
+        <property name="password" value="test"/>
+    </bean>
+
+    <!-- 配置sessionFacfory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 加载dataSource -->
+        <property name="dataSource" ref="dataSource"/>
+        <!--加载usermapper.xml-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <context:component-scan base-package="me.silentdoer.ssmdemo">
+        <!-- exclude by regex, also can use aspectj ex to exclude -->
+        <context:exclude-filter type="regex" expression="me.silentdoer.ssmdemo.pojo..*"/>
+    </context:component-scan>
+
+    <!-- userDao, it's extends SqlSessionDapSupport -->
+    <!--<bean id="studentDao" class="me.silentdoer.ssmdemo.dao.impl.StudentDaoImpl">
+        &lt;!&ndash; in setSqlsessionFactory method: this.sqlSession = new SqlSessionTemplate(sqlSessionFactory) &ndash;&gt;
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>-->
+
+    <!--userService-->
+    <!--<bean id="studentService" class="me.silentdoer.ssmdemo.service.impl.StudentServiceImpl">
+        <property name="studentDao" ref="studentDao"/>
+    </bean>-->
+
+    <!--userAction-->
+    <!--<bean id="userAction" class="me.silentdoer.ssmdemo.action.student.StudentAction">
+        <property name="studentService" ref="studentService"/>
+    </bean>-->
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+                        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+
+    <!-- use development mode, when exception occur will show in the response body -->
+    <constant name="struts.devMode" value="true" />
+
+    <!-- ke yi bu yao -->
+    <!--<constant name="struts.objectFactory" value="spring" />-->
+    <constant name="struts.i18n.encoding" value="utf-8" />
+
+    <!-- use to separate diff func action, extends is important for link struts2-spring -->
+    <!-- namespace like RequestMapping on controller -->
+    <!-- if namespace is /, then http://localhost:8090/getStudent?uid=1, if namespace is /entity, ..8090/entity/getStudent?uid=1 -->
+    <package name="entity-resolver" extends="struts-default" namespace="/entity">
+        <!-- name is in Struts registry key&context/student, class is the action class or spring beanName -->
+        <!-- method attr is for special method to be handlerMethod -->
+        <action name="getStudent" class="studentAction">
+            <result name="success">/WEB-INF/content/vo/student.jsp</result>
+            <result name="error">/WEB-INF/content/common/error.jsp</result>
+        </action>
+    </package>
+
+    <package name="index" extends="struts-default" namespace="/">
+        <!-- Struts2 process url also bu xu yao suffix -->
+        <action name="index" class="indexAction">
+            <result name="success">/index.html</result>
+        </action>
+    </package>
+
+    <!--<package name="about-permission" extends="struts-default"></package>-->
+
+</struts>
