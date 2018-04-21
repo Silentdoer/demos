@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mapper namespace="silentdoer.demo.mybatis.mapping.Student">
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
+    使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
+    resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回
+    User类就是users表所对应的实体类
+    -->
+    <!--
+        根据uid查询得到一个Student对象
+     -->
+    <select id="getStudent" parameterType="long"
+            resultType="silentdoer.demo.mybatis.pojo.Student">
+        select no, name from student where uid=#{?}
+    </select>
+</mapper>

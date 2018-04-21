@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties>
+        <!-- 这个就是通过SqlSessionFactoryBuilder.build时设置的Properties（比如db.properties），可以用于后面${url} -->
+    </properties>
+
+    <!-- 这个位置不能乱放，要在properties后面 -->
+    <settings>
+        <!-- 这里的配置都是有默认值的，这个配置项的默认值是true -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+
+    <environments default="mysql_druid">
+        <environment id="mysql_druid">
+            <transactionManager type="JDBC" />
+            <!-- 配置数据库连接信息 -->
+            <!-- POOLED等同于org.apache.ibatis.datasource.pooled.PooledDataSourceFactory -->
+            <dataSource type="me.silentdoer.mybatisusage.datasource.DruidDataSourceFactory">  <!-- POOLED是mybatis的一个约定名 -->
+                <!--<property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/db_test" />
+                <property name="username" value="root" />
+                <property name="password" value="nlwyzpass" />-->
+
+
+                <!-- 注意Druid里没有driver属性，与之对应的是叫driverClassName，如果数据库是Mybatis则可以不设置，默认值就是这个 -->
+                <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/db_test" />
+                <property name="username" value="root" />
+                <property name="password" value="nlwyzpass" />
+                <!-- 配置初始化大小、最小、最大 -->
+                <property name="initialSize" value="1" />
+                <property name="minIdle" value="1" />
+                <property name="maxActive" value="20" />
+
+                <!-- 配置获取连接等待超时的时间 -->
+                <property name="maxWait" value="60000" />
+
+                <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+                <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+                <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+                <property name="minEvictableIdleTimeMillis" value="300000" />
+
+                <property name="validationQuery" value="SELECT 'x'" />
+                <property name="testWhileIdle" value="true" />
+                <property name="testOnBorrow" value="false" />
+                <property name="testOnReturn" value="false" />
+
+                <!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
+                <property name="filters" value="stat" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 注册studentMapper.xml文件，studentMapper.xml位于silentdoer.demo.mybatis.mapping这个包下
+        ，所以resource写成silentdoer/demo/mybatis/mapping/studentMapper.xml-->
+        <mapper resource="silentdoer/demo/mybatis/mapping/studentMapper.xml"/>
+    </mappers>
+</configuration>

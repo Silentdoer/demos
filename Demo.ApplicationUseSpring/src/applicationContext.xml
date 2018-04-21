@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="stud1" class="silentdoer.demo.spring.pojo.Student"/>
+    <!-- 默认是singleton的 -->
+    <bean id="str1" class="java.lang.String" scope="singleton" lazy-init="true">
+        <constructor-arg value="UUUUUUUU"/>
+    </bean>
+    <!-- primitive类型不能作为bean -->
+    <!--  init-method="getName"是干嘛用的 -->
+    <bean id="stud2" class="silentdoer.demo.spring.pojo.Student">
+        <!-- index和type可以不填，但是如果多个构造方法参数存在且不按顺序的话最好填上（4.3不需要按顺序填，只要个数了类型一样就能匹配）
+         测一下这个特性是反射中构造方法自己实现的还是spring实现的匹配？？？？-->
+        <!-- 注意这个arg个数及类型一定要能匹配一个Student的构造方法，否则会报错，故是先用构造方法创建对象然后用反射设置此对象的name属性 -->
+        <!-- 当是value时才需要type（可以不写），ref完全没必要，index最好写上 -->
+        <constructor-arg name="uid" value="500" index="0" type="long"/>
+        <constructor-arg name="gender" ref="str1"/>
+        <!-- 对于一些基础类型包括String的字段值用value，复杂类型用ref，且对应的对象也有bean，ref和value只能存在一个 -->
+        <property name="name" value="Hello"/>
+    </bean>
+
+</beans>

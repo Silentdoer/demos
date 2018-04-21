@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mapper namespace="me.silentdoer.simulatemybatis.mapping.StudentMapper">
+    <select id="getSingleStudent" parameterType="java.lang.Long"
+            resultType="me.silentdoer.simulatemybatis.pojo.Student">
+        select no, name from student where uid=#{?}
+    </select>
+</mapper>

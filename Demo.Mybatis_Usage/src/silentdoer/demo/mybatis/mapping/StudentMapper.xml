@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="silentdoer.demo.mybatis.mapping.studentMapper"就是silentdoer.demo.mybatis.mapping(包名)+studentMapper(studentMapper.xml文件去除后缀)
+这个再看看，是否需要后面的studentMapper，名称空间总感觉是可以容纳很多个类的感觉；一个mapper可以为多个pojo服务吗？
+
+应该是一个Mapper可以服务于多个pojo，不过一般都只服务于一个能更好的分工；而且namespace确实一般是集合，但这里不是pojo的集合而是
+操作某个表的所有操作的集合，最基本的就是增删改查及判断是否有数据等等，而且增删改查也是可以细分，比如只查A部分、B部分等，删除也是
+可以有多个方法都是删除但是参数不一样。
+ -->
+<!-- 名称空间最后的Mapper最好大写开头为了和内部的方法区分（方法是小写开头），故对应文件最好也是大写开头 -->
+<mapper namespace="silentdoer.demo.mybatis.mapping.StudentMapper">
+    <resultMap id="studentResultMap" type="silentdoer.demo.mybatis.pojo.Student">
+        <!-- 即便是完全对应也要用ResultMap来解耦数据库字段名和pojo属性名 -->
+        <id column="uid" jdbcType="BIGINT" property="uid"/>
+        <result column="no" jdbcType="VARCHAR" property="no"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+    </resultMap>
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
+    使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
+    resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回
+    User类就是users表所对应的实体类
+    -->
+    <!--
+        根据uid查询得到一个Student对象
+     -->
+    <!--<select id="getStudent" parameterType="long"
+            resultType="silentdoer.demo.mybatis.pojo.Student">
+        select * from student where uid=#{?}
+    </select>-->
+    <!-- 如果参数是java.lang.String则${?}中的值必须把控不能有'mm' or name = 'xx' or gender = 'male'这样的语句防止SQL注入
+     ，如果字符串内部需要用到'符号则应该左边有\转义字符，这个可以用正则表达式判断字符串是否符合MySQL规范-->
+    <!-- 多个类型的参数存在是parameterType怎么写？？？？ -->
+    <select id="getStudent" parameterType="java.lang.Long"
+            resultMap="studentResultMap">
+        select * from student where uid=#{?}
+    </select>
+</mapper>
