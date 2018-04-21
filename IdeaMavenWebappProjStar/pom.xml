@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>silentdoer</groupId>
+    <artifactId>IdeaMavenWebappProjStar</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <build>
+        <!-- 指定打包发布的名字，可以和artifactId的值不一样 -->
+        <finalName>IdeaMavenWebappProjStar</finalName>
+    </build>
+
+    <!-- 配置常量，用于dependency调用，常量名是自定义的，如下面的springmvc.version -->
+    <properties>
+        <!-- 以JDK8来编译 -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- 用于表示SpringMVC的Group -->
+        <spring.group>org.springframework</spring.group>
+        <!-- 用于表示SpringMVC相关的通用版本 -->
+        <spring.version>4.3.4.RELEASE</spring.version>
+
+        <!-- 用于表示MyBatis相关的Group -->
+        <mybatis.group>org.mybatis</mybatis.group>
+        <!-- 用于表示MyBatis的通用版本 -->
+        <mybatis.version>3.4.4</mybatis.version>
+        <!-- 用于表示MyBatis-Spring的版本 -->
+        <mybatis-spring.version>1.3.1</mybatis-spring.version>
+
+        <!-- mysqlconnector所需jar的Group -->
+        <mysql.group>mysql</mysql.group>
+        <!-- 用于表示MySQL-Connector的版本 -->
+        <mysql-connector.version>5.1.41</mysql-connector.version>
+
+        <!-- 阿里巴巴的Group名 -->
+        <ali.group>com.alibaba</ali.group>
+        <!-- druid的版本 -->
+        <druid.version>1.1.0</druid.version>
+        <!-- fastjson版本 -->
+        <fastjson.version>1.2.34</fastjson.version>
+
+        <!-- JUnit4所需jar的Group -->
+        <junit.group>junit</junit.group>
+        <!-- 单元测试所需jar的版本 -->
+        <junit.version>4.12</junit.version>
+
+        <!-- log4j的Group -->
+        <log4j.group>log4j</log4j.group>
+        <!-- log4j日志文件管理包版本 -->
+        <log4j.version>1.2.17</log4j.version>
+
+        <!-- slf4j的Group -->
+        <slf4j.group>org.slf4j</slf4j.group>
+        <!-- slf4j的version -->
+        <slf4j.version>1.7.25</slf4j.version>
+
+        <!-- Jackson Group -->
+        <jackson.group>org.codehaus.jackson</jackson.group>
+        <!-- Jackson general version -->
+        <jackson.version>1.9.13</jackson.version>
+
+        <!-- 另一种Jackson的Group -->
+        <fstjackson.group>com.fasterxml.jackson.core</fstjackson.group>
+        <fstjackson.version>2.7.0</fstjackson.version>
+
+        <!-- spring用aop所需的aspectj所需包 -->
+        <aspectj.group>org.aspectj</aspectj.group>
+        <aspectj.version>1.8.9</aspectj.version>
+
+    </properties>
+
+    <dependencies>
+
+        <!-- 导入java ee jar 包，目前只有7.0，它跟Java8无关，是一套企业开发规范 -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+
+        <!-- 注意artifactId和version这两个值就构成了jar的完整名，如下面junit-4.12.jar就是包名，而groupId则是该包的来源的Group名，比如不同团队开发的jar包可能重名 -->
+        <dependency>
+            <groupId>${junit.group}</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <!-- 一般该值就是test，表示开发的时候引入，发布的时候不会加载此包 -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- spring核心包，jar包完整名是spring-core-4.3.4-RELEASE.jar -->
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${aspectj.group}</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+
+        <!-- <dependency>
+            <groupId>${aspectj.group}</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency> -->
+
+        <!-- https://mvnrepository.com/artifact/aopalliance/aopalliance -->
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/cglib/cglib -->
+        <!-- <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.4</version>
+        </dependency> -->
+
+        <dependency>
+            <groupId>${mybatis.group}</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${mybatis.group}</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${mysql.group}</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${jackson.group}</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${jackson.group}</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${fstjackson.group}</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${fstjackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${fstjackson.group}</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${fstjackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${fstjackson.group}</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${fstjackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${log4j.group}</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${ali.group}</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${ali.group}</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${slf4j.group}</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${slf4j.group}</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+    </dependencies>
+</project>

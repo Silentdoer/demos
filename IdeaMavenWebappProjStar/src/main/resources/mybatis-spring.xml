@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 这里的<beans标签最好和springmvc.xml里的一模一样，如果还有其它分支的.xml也是最好一模一样 -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+		
+		<!-- 会扫描silentdoer.web.service包及其子包 -->
+		<context:component-scan base-package="silentdoer.web" />
+		
+		<!-- 指定从配置文件中加载数据库连接信息 -->
+		<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<property name="location">
+				<value>classpath:properties/db.properties</value>
+			</property>
+		</bean>
+		
+		<!-- 阿里 druid 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<!-- 数据库基本信息配置 -->
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="filters" value="${filters}" />
+		<!-- 最大并发连接数 -->
+		<property name="maxActive" value="${maxActive}" />
+		<!-- 初始化连接数量 -->
+		<property name="initialSize" value="${initialSize}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${maxWait}" />
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${minIdle}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+		<property name="validationQuery" value="${validationQuery}" />
+		<property name="testWhileIdle" value="${testWhileIdle}" />
+		<property name="testOnBorrow" value="${testOnBorrow}" />
+		<property name="testOnReturn" value="${testOnReturn}" />
+		<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
+		<!-- 打开 removeAbandoned 功能 -->
+		<property name="removeAbandoned" value="${removeAbandoned}" />
+		<!-- 1800 秒，也就是 30 分钟 -->
+		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+		<!-- 关闭 abanded 连接时输出错误日志，值为true -->
+		<property name="logAbandoned" value="${logAbandoned}" />
+	</bean>
+	
+	<!-- 配置sqlSessionFactory，将spring和mybatis整合 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 似乎还可以配置属性名为"mapperLocations"，通过这个配置可以让UserMapper.xml不一定要和UserMapper.java同名和在同一文件夹下？ -->
+		<property name="mapperLocations" value="classpath:mappingxml/*Mapper.xml"></property>
+	</bean>
+
+	<!-- 扫描包中的mapper类，将Mapper接口生成代理注入到Spring，注意这里使用了sqlSessionFactoryBeanName -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="silentdoer.web.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	
+	<!-- 由于dataSource是配置在mybatis-spring.xml中，故aop也只好先写在这个xml里，不过个人认为mybatis-spring.xml和springmvc.xml是一体的（还未测试） -->
+	<!-- 据说事务 需要三件事才可以  一具体的事务实现着  二事务管理器  三  aop 事务控制 -->
+	<!-- 用来配置事务管理器，好像还可以通过这个配置事务传播特性之类的 -->
+	<!--<bean name="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>-->
+	
+	<!--<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			&lt;!&ndash; 配置哪些方法使用什么样的事务，和事务的传播特性 &ndash;&gt;
+			&lt;!&ndash; REQUIRED表示一定要开启事务 &ndash;&gt;
+			&lt;!&ndash; 这些方法的配置是对下面aop的pointcut的一个补充，因为可能pointcut里所有函数/连接点都要用到事务，但是每个函数/连接点用的事务的传播特性不一样，这时候这里有method配置就至关重要了 &ndash;&gt;
+			&lt;!&ndash; 再次强调，这里的method是对pointcut的补充，pointcut只是声明哪些方法需要用到事务，而这里则是对用到事务的方法配置相应的传播特性 &ndash;&gt;
+			<tx:method name="removeTeacher" propagation="REQUIRED"/>
+			&lt;!&ndash; add*表示以add开头的函数，如addUser &ndash;&gt;
+			<tx:method name="add*" propagation="REQUIRED"/>
+			&lt;!&ndash; 表示get这个方法对数据库的操作是只读的（即该方法里只能有select不能有 有delete或insert或update功能的数据库操作），否则会报错 &ndash;&gt;
+			<tx:method name="get" read-only="true"/>
+			&lt;!&ndash; *是通配符，表示任意方法（上面配了的除外） &ndash;&gt;
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>-->
+	<!--<aop:config>
+		<aop:pointcut expression="execution(* silentdoer.web.service.impl.BookTeacherServiceImpl.*(..))" id="txAdvicePointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txAdvicePointcut"/>
+	</aop:config>-->
+		
+</beans>

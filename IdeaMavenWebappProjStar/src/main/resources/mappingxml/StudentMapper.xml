@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 通过namespace将Mapper.xml映射到相应  接口  上 -->
+<mapper namespace="silentdoer.web.dao.StudentMapper">
+    <resultMap id="BaseResultMap" type="silentdoer.web.entity.Student">
+        <id column="std_id" jdbcType="BIGINT" property="stdId"/>
+        <result column="std_name" jdbcType="VARCHAR" property="stdName"/>
+        <result column="std_code" jdbcType="VARCHAR" property="stdCode"/>
+        <result column="std_sex" jdbcType="VARCHAR" property="stdSex"/>
+        <result column="std_phone" jdbcType="VARCHAR" property="stdPhone"/>
+        <result column="school_id" jdbcType="BIGINT" property="schoolId"/>
+        <result column="grade_id" jdbcType="BIGINT" property="gradeId"/>
+        <result column="cls_id" jdbcType="BIGINT" property="clsId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    std_id, std_name, std_code, std_sex, std_phone, school_id, grade_id, cls_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        <!--<include refid="BaseResultMap" />-->
+        from student
+        where std_id = #{stdId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from student
+    where std_id = #{stdId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="silentdoer.web.entity.Student">
+    insert into student (std_id, std_name, std_code, 
+      std_sex, std_phone, school_id, 
+      grade_id, cls_id)
+    values (#{stdId,jdbcType=BIGINT}, #{stdName,jdbcType=VARCHAR}, #{stdCode,jdbcType=VARCHAR}, 
+      #{stdSex,jdbcType=VARCHAR}, #{stdPhone,jdbcType=VARCHAR}, #{schoolId,jdbcType=BIGINT}, 
+      #{gradeId,jdbcType=BIGINT}, #{clsId,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="silentdoer.web.entity.Student">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stdId != null">
+                std_id,
+            </if>
+            <if test="stdName != null">
+                std_name,
+            </if>
+            <if test="stdCode != null">
+                std_code,
+            </if>
+            <if test="stdSex != null">
+                std_sex,
+            </if>
+            <if test="stdPhone != null">
+                std_phone,
+            </if>
+            <if test="schoolId != null">
+                school_id,
+            </if>
+            <if test="gradeId != null">
+                grade_id,
+            </if>
+            <if test="clsId != null">
+                cls_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stdId != null">
+                #{stdId,jdbcType=BIGINT},
+            </if>
+            <if test="stdName != null">
+                #{stdName,jdbcType=VARCHAR},
+            </if>
+            <if test="stdCode != null">
+                #{stdCode,jdbcType=VARCHAR},
+            </if>
+            <if test="stdSex != null">
+                #{stdSex,jdbcType=VARCHAR},
+            </if>
+            <if test="stdPhone != null">
+                #{stdPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolId != null">
+                #{schoolId,jdbcType=BIGINT},
+            </if>
+            <if test="gradeId != null">
+                #{gradeId,jdbcType=BIGINT},
+            </if>
+            <if test="clsId != null">
+                #{clsId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="silentdoer.web.entity.Student">
+        update student
+        <set>
+            <if test="stdName != null">
+                std_name = #{stdName,jdbcType=VARCHAR},
+            </if>
+            <if test="stdCode != null">
+                std_code = #{stdCode,jdbcType=VARCHAR},
+            </if>
+            <if test="stdSex != null">
+                std_sex = #{stdSex,jdbcType=VARCHAR},
+            </if>
+            <if test="stdPhone != null">
+                std_phone = #{stdPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolId != null">
+                school_id = #{schoolId,jdbcType=BIGINT},
+            </if>
+            <if test="gradeId != null">
+                grade_id = #{gradeId,jdbcType=BIGINT},
+            </if>
+            <if test="clsId != null">
+                cls_id = #{clsId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where std_id = #{stdId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="silentdoer.web.entity.Student">
+    update student
+    set std_name = #{stdName,jdbcType=VARCHAR},
+      std_code = #{stdCode,jdbcType=VARCHAR},
+      std_sex = #{stdSex,jdbcType=VARCHAR},
+      std_phone = #{stdPhone,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=BIGINT},
+      grade_id = #{gradeId,jdbcType=BIGINT},
+      cls_id = #{clsId,jdbcType=BIGINT}
+    where std_id = #{stdId,jdbcType=BIGINT}
+  </update>
+</mapper>
