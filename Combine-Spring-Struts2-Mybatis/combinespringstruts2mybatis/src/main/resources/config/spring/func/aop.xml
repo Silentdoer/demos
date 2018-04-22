@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 通知 -->
+    <bean id="logArgs" class="me.silentdoer.ssmdemo.aop.log.PrintArgs"></bean>
+
+    <!-- aop配置 -->
+    <aop:config proxy-target-class="true">
+        <!-- 切面, pointcut+type+render is a aspect, type is before/after/, render is advice -->
+        <aop:aspect ref="logArgs">
+            <!-- 切点, pointcut is link to a method, method is pointcut -->
+            <aop:pointcut id="pointcuts1" expression="execution(* me.silentdoer.ssmdemo.service.impl.StudentServiceImpl.*(..))"/>
+            <!--连接通知方法与切点 -->
+            <!--<aop:before method="before" pointcut-ref="pointcuts1"/>
+            <aop:after method="after" pointcut-ref="pointcuts1"/>-->
+            <aop:around method="around" pointcut-ref="pointcuts1"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

@@ -1,6 +1,6 @@
 package me.silentdoer.ssmdemo.service;
 
-import me.silentdoer.ssmdemo.pojo.Student;
+import me.silentdoer.ssmdemo.po.Student;
 
 /**
  * @author silentdoer

@@ -1,6 +1,6 @@
 package me.silentdoer.ssmdemo.dao;
 
-import me.silentdoer.ssmdemo.pojo.Student;
+import me.silentdoer.ssmdemo.po.Student;
 import org.apache.ibatis.annotations.Param;
 
 /**

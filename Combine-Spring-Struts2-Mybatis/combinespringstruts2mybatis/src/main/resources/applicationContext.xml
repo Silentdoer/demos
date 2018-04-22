@@ -31,6 +31,7 @@
     <!-- first * is all visit qualifier -->
     <!-- aop -->
     <aop:config>
+        <!-- second * and (..) is mean all methods in StudentDaoImpl -->
         <aop:pointcut id="pointcut" expression="execution(* me.silentdoer.ssmdemo.dao.impl.StudentDaoImpl.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
@@ -55,6 +56,8 @@
         <!-- exclude by regex, also can use aspectj ex to exclude -->
         <context:exclude-filter type="regex" expression="me.silentdoer.ssmdemo.pojo..*"/>
     </context:component-scan>
+
+    <import resource="classpath:config/spring/func/aop.xml"/>
 
     <!-- userDao, it's extends SqlSessionDapSupport -->
     <!--<bean id="studentDao" class="me.silentdoer.ssmdemo.dao.impl.StudentDaoImpl">

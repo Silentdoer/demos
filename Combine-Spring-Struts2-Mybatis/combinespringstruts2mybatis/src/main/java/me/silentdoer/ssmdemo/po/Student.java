@@ -1,4 +1,4 @@
-package me.silentdoer.ssmdemo.pojo;
+package me.silentdoer.ssmdemo.po;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

@@ -1,13 +1,11 @@
 package me.silentdoer.ssmdemo.service.impl;
 
 import me.silentdoer.ssmdemo.dao.StudentDao;
-import me.silentdoer.ssmdemo.pojo.Student;
+import me.silentdoer.ssmdemo.po.Student;
 import me.silentdoer.ssmdemo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author silentdoer
@@ -27,11 +25,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student getOneUserWithLogic(Long uid) {
+        // TODO can be replace by aop
+        //System.out.println(String.format("uid is:%s", uid));
         // some logic impl
         if(uid == null){
             throw new IllegalArgumentException("uid is not null, please check.");
         }
-        System.out.println(String.format("uid is:%s", uid));
         Student student = this.studentDao.selectOne(uid);
         return student;
     }

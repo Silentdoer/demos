@@ -1,15 +1,13 @@
 package me.silentdoer.ssmdemo.dao.impl;
 
 import me.silentdoer.ssmdemo.dao.StudentDao;
-import me.silentdoer.ssmdemo.pojo.Student;
+import me.silentdoer.ssmdemo.po.Student;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
-import static org.junit.Assert.*;
 
 /**
  * @author silentdoer

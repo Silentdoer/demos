@@ -6,7 +6,7 @@
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
 
     <!-- use development mode, when exception occur will show in the response body -->
-    <constant name="struts.devMode" value="true" />
+    <!--<constant name="struts.devMode" value="true" />-->
 
     <!-- ke yi bu yao -->
     <!--<constant name="struts.objectFactory" value="spring" />-->

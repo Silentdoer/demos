@@ -1,12 +1,10 @@
 package me.silentdoer.ssmdemo.dao.impl;
 
 import me.silentdoer.ssmdemo.dao.StudentDao;
-import me.silentdoer.ssmdemo.pojo.Student;
+import me.silentdoer.ssmdemo.po.Student;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -24,7 +22,7 @@ public class StudentDaoImpl extends SqlSessionDaoSupport implements StudentDao {
 
     public Student selectOne(long uid) {
         final SqlSession session = this.getSqlSession();
-        String statement = "me.silentdoer.ssmdemo.pojo.StudentMapper.selectOne";
+        String statement = "me.silentdoer.ssmdemo.po.StudentMapper.selectOne";
         return session.selectOne(statement, uid);
     }
 

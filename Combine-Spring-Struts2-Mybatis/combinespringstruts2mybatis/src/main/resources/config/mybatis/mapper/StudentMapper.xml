@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="me.silentdoer.ssmdemo.pojo.StudentMapper">
-    <resultMap id="studentResultMap" type="me.silentdoer.ssmdemo.pojo.Student">
+<mapper namespace="me.silentdoer.ssmdemo.po.StudentMapper">
+    <resultMap id="studentResultMap" type="me.silentdoer.ssmdemo.po.Student">
         <id property="uid" column="uid"/>
         <result property="name" column="name"/>
         <result property="gender" column="gender"/>
@@ -16,6 +16,6 @@
     </insert>-->
 
     <select id="selectOne" resultMap="studentResultMap">
-        select uid, name, gender, create_time from student where uid=#{uid}
+        select uid, name, gender, create_time, update_time from student where uid=#{uid}
     </select>
 </mapper>
