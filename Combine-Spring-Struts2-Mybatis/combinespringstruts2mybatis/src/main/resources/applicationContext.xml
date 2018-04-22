@@ -11,15 +11,18 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--<tx:annotation-driven transaction-manager="txManager" />-->
+    <!-- bu yao yong zhe ge, ta hui zi dong pei zhi txAdvice, dan shi hai shi zi ji pei zhi bi jiao hao -->
+    <!--<tx:annotation-driven transaction-manager="txManager" mode="aspectj" />-->
 
     <!--配置事务管理器-->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!-- important txAdvice is TransactionInterceptor, is implements MethodInterceptor -->
     <!-- transaction -->
     <tx:advice id="txAdvice" transaction-manager="txManager">
+        <!-- zhe xie attrs hui zuo wei zhu ce xiang zai TransactionInterceptor li -->
         <tx:attributes>
             <tx:method name="select*" read-only="true"/>
             <tx:method name="insert*" propagation="REQUIRED"/>
@@ -33,6 +36,7 @@
     <aop:config>
         <!-- second * and (..) is mean all methods in StudentDaoImpl -->
         <aop:pointcut id="pointcut" expression="execution(* me.silentdoer.ssmdemo.dao.impl.StudentDaoImpl.*(..))"/>
+        <!-- advisor is a simple advice, just a invoke and MethodInvocation by aopalliance -->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
 

@@ -1,7 +1,12 @@
 package me.silentdoer.ssmdemo.aop.advice.log;
 
+import org.aopalliance.aop.Advice;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.aop.Advisor;
+import org.springframework.beans.factory.xml.DefaultNamespaceHandlerResolver;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
@@ -11,8 +16,11 @@ import java.util.Arrays;
  * @description the description
  * @date 4/22/18 8:23 AM
  */
+/*@Component
+  @Aspect*/
 public class PrintArgs {
 
+    /*@Before("execution(* com.zhangguo.Spring052.aop02.Math.*(..))")*/
     public void before(JoinPoint jp){
         System.out.println("----------前置通知----------");
         // print what's the method name
