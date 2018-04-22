@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 通知 -->
-    <bean id="logArgs" class="me.silentdoer.ssmdemo.aop.log.PrintArgs"></bean>
+    <bean id="logArgs" class="me.silentdoer.ssmdemo.aop.advice.log.PrintArgs"></bean>
 
     <!-- aop配置 -->
     <aop:config proxy-target-class="true">

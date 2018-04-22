@@ -1,4 +1,4 @@
-package me.silentdoer.ssmdemo.aop.log;
+package me.silentdoer.ssmdemo.aop.advice.log;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -30,6 +30,10 @@ public class PrintArgs {
         System.out.println("Around begin: " + pjp.getSignature().getName());
         System.out.println(String.format("args is -> %s", Arrays.toString(pjp.getArgs())));
         Object result = pjp.proceed();  // ok, bu xu yao yong proceed(args), proceed() nei bu zi ji hui chu li.
+        // tong guo getArgs he proceed(args) ke yi dui args jin xing lan jie chu li
+        /*Object[] args = pjp.getArgs();
+        args[0] = (long)args[0] + 1;
+        pjp.proceed(args);*/
         System.out.println("Around end");
         return result;
     }
