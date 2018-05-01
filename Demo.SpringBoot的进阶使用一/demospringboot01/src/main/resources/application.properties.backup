@@ -1,0 +1,4 @@
+#\u53EF\u4EE5\u7528application.yml\u4EE3\u66FFapplication.properties
+#server.port=8090
+#spring.mvc.view.prefix=/WEB-INF/jsp/
+#spring.mvc.view.suffix=.jsp

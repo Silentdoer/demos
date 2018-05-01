@@ -1,0 +1,6 @@
+# 注意:后面的空白符（一般就是空格）不要少了
+# 将application-dev作为当前活动的配置，即此时可以理解为application-dev.yml就是真正的application.yml文件
+# 还有个test测试环境
+spring:
+  profiles:
+    active: dev

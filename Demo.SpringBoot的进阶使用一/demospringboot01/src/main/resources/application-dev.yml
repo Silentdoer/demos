@@ -1,0 +1,29 @@
+# 对应着application.properties中的server.port，即有多少层就对应中间有多少个.号；同一层的垂直对齐
+server:
+  port: 8090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_test
+    username: test
+    password: test
+  http:
+      encoding:
+        force: true
+        charset: UTF-8
+  freemarker:
+    allow-request-override: false
+    cache: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    suffix: .ftl
+    template-loader-path: classpath:/templates/freemaker  # 如果少了/freemaker那么mapping方法返回的字符串里就要包括此值
+
+# 我这里只是添加了spring-boot整合mybatis的依赖包但是没有配置却可以直接使用mybatis功能了
+#，估计是mybatis依赖包里有个特殊的类，即插件类能被spring-boot自动扫描并加载
+# SpringBoot的进一步配置可以参考https://blog.csdn.net/winter_chen001/article/details/77249029（包括数据库连接池等配置）
