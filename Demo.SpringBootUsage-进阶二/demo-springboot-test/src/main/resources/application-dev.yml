@@ -1,0 +1,18 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_test
+    username: test
+    password: test
+    # druid
+    type: com.alibaba.druid.pool.DruidDataSource
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false

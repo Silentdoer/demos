@@ -12,7 +12,7 @@
         <aop:pointcut id="pointcuts1" expression="execution(* me.silentdoer.ssmdemo.service.impl.StudentServiceImpl.*(..))"/>
         <!-- 切面, pointcut+type+render is a aspect, type is before/after/, render is advice -->
         <aop:aspect ref="logArgs">
-            <!--连接通知方法与切点 -->
+            <!--连接通知方法与切点，如果before和after和around的pointcut不共用那么是可以直接在方法里配置pointcut的，而且不存在说一个方法上应用多个pointcut的说法 -->
             <!--<aop:before method="before" pointcut-ref="pointcuts1"/>
             <aop:after method="after" pointcut-ref="pointcuts1"/>-->
             <aop:around method="around" pointcut-ref="pointcuts1"/>
