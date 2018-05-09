@@ -41,6 +41,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -52,13 +56,43 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <!-- 不要用默认的jackson，经过测试有很多不如人意的地方，比如不支持fName这种命名方式 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>destination</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <!-- 跟踪自动编译详细信息 -->
+                        <!--<arg>-verbose</arg>-->
+                        <!-- 没有这个配置的话以javac模式编译，有些用了泛型的地方会提示使用了未经检查或不安全的操作 -->
+                        <arg>-Xlint:unchecked</arg>
+                        <!-- 没有会报使用了过时的api -->
+                        <!--<arg>-Xlint:deprecation</arg>-->
+                        <!-- 使得可以使用sun.*包内的类，不过一般不建议使用 -->
+                        <!--<arg>-bootclasspath</arg>-->
+                        <!-- java8新增，用于能反射参数的真正名字 -->
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>
