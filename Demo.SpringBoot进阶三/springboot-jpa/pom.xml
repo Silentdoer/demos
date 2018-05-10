@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.silentdoer</groupId>
-    <artifactId>springboot-redis</artifactId>
+    <artifactId>springboot-jpa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>springboot-redis</name>
+    <name>springboot-jpa</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -27,24 +27,11 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <dependency>
@@ -62,6 +49,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -69,30 +61,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <!-- TODO 经过测试产生作用了，没有了message的提示，但是IDEA还是会提示的，这个不管 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                    <compilerArgs>
-                        <!-- 跟踪自动编译详细信息 -->
-                        <!--<arg>-verbose</arg>-->
-                        <!-- 没有这个配置的话以javac模式编译，有些用了泛型的地方会提示使用了未经检查或不安全的操作 -->
-                        <arg>-Xlint:unchecked</arg>
-                        <!-- 没有会报使用了过时的api -->
-                        <!--<arg>-Xlint:deprecation</arg>-->
-                        <!-- 使得可以使用sun.*包内的类，不过一般不建议使用 -->
-                        <!--<arg>-bootclasspath</arg>-->
-                        <!-- java8新增，用于能反射参数的真正名字 -->
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                </configuration>
             </plugin>
         </plugins>
     </build>

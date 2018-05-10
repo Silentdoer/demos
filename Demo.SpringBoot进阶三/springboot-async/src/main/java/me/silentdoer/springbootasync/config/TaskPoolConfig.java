@@ -2,6 +2,7 @@ package me.silentdoer.springbootasync.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -20,7 +21,7 @@ public class TaskPoolConfig {
      * @return 返回自定义的Executor（线程池）
      */
     @Bean("myExecutor")
-    public Executor taskExecutor(){
+    public AsyncTaskExecutor taskExecutor(){
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(1);
         taskExecutor.setMaxPoolSize(5);

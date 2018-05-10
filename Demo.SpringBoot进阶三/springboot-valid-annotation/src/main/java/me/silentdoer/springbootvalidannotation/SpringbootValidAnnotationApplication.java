@@ -12,6 +12,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class SpringbootValidAnnotationApplication {
@@ -44,5 +45,11 @@ public class SpringbootValidAnnotationApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootValidAnnotationApplication.class, args);
+    }
+
+    private static void test(Map map){
+        final Map<String, String> m2 = map;
+        m2.put("uuu", "sss");
+        System.out.println(m2.size());
     }
 }
