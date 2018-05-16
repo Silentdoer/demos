@@ -11,7 +11,7 @@ public interface TaskProducer {
      * 将客户端的请求生成MQ中的任务
      * @param task task
      */
-    void offerTask(Object task);
+    int offerTask(Object task);
 
     /**
      * 一次性offer多个task

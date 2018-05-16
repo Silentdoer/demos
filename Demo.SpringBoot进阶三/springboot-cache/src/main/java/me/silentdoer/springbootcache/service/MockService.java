@@ -3,6 +3,7 @@ package me.silentdoer.springbootcache.service;
 import lombok.extern.slf4j.Slf4j;
 import me.silentdoer.springbootcache.model.Student;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,10 +25,17 @@ public class MockService {
      * 这个 args是参数组成的“数组”，但是输出是：77,uuu的格式而不是一个对象
      *
      * TODO 由于这个类是singleton，因此用targetClass而无需target（target表示调用此方法的类对象，即MockService对象）
+     *
+     * TODO 这个value值在application.properties里配置了spring.cache.redis.key-prefix=xxx后会失效（因此最好不要用value，只用key即可，students写到key里，错误总结）
+     * 而cacheNames似乎是value的别名？？
+     *
+     * 注意这个生产key时用到所有参数，跟参数是否被用到无关，因为运行时代码是不知道的只是IDE能检测而已；
+     *
+     * TODO condition可以用SpEL来写，只有当其值为true时才缓存
      * @param arg
      * @return
      */
-    @Cacheable(value = "students", key="#root.targetClass.name.concat('#') + #root.methodName.concat('#') + #root.args")
+    @Cacheable(value = "students", key="#root.targetClass.name.concat('#') + #root.methodName.concat('#') + #root.args", condition = "true")
     public Student doService(Long arg, String aa){
         log.info("doService".concat(arg.toString()));
         return new Student().setUid(arg).setName("default");

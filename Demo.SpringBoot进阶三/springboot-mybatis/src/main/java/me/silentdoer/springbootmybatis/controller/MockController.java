@@ -8,6 +8,7 @@ import me.silentdoer.springbootmybatis.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author silentdoer
@@ -42,5 +43,10 @@ public class MockController {
         Student student = this.studentNoAnnotationMapper.selectStudentByPrimaryKey(uid);
         log.info(student.toString());
         return student;
+    }
+
+    @GetMapping("/test1")
+    public List<Student> getStudents(){
+        return this.studentService.getStudents(1, 2);
     }
 }

@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface StudentService {
     Student getSingleStudent(@Param("uid") Long uid);
-    //List<Student> getStudents(@Param("leftIdx") )
+
+    List<Student> getStudents(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 }

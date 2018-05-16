@@ -6,6 +6,7 @@ import me.silentdoer.springbootjpa.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -21,12 +22,12 @@ public class MockController {
     private IAccountService accountService;
 
     /**
-     * 测试成功，获取到了数据
+     * 测试成功，获取到了数据，@Min之类的可以直接注解到参数上
      * @param id
      * @return
      */
     @GetMapping("/{id}")
-    public Account getAccountById(@PathVariable("id") Long id){
+    public Account getAccountById(@PathVariable("id") @Min(value = 1, message = "id值不能小于1") Long id){
         return this.accountService.getSingleAccount(id);
     }
 

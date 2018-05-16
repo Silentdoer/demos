@@ -4,12 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import me.silentdoer.springbootvalidannotation.annotation.MyJustNumberValid;
 import me.silentdoer.springbootvalidannotation.model.MockModel;
 import me.silentdoer.springbootvalidannotation.model.Student;
+import me.silentdoer.springbootvalidannotation.model.TestModel;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +38,7 @@ public class MockController {
          * Stream<Character> letters = words.flatMap(w -> characterStream(w));  // TODO 将每个元素转换为了一个新数组，但最终还是会将这些子数组合并
          */
 
-        log.info(StringUtils.join("存在不合规定的数据：", bindingResult.getAllErrors().stream().map(o -> o.toString()).collect(Collectors.toList()).toString()));
+        log.info(StringUtils.join("存在不合规定的数据：", bindingResult.getAllErrors().stream().map(Object::toString).collect(Collectors.toList()).toString()));
         log.info(student.toString());
         // TODO 注意，如果通过@Pattern+@Valid+BindingResult联合使得规定产生效果，但是仍然需要用bindingResult来获取是否存在不合法的数据，因此这里需要用bindingResult来判断
         if(bindingResult.getAllErrors().size() > 0){
@@ -56,5 +59,17 @@ public class MockController {
         MockModel result = new MockModel();
         result.setFUid("3388").setFName("中文");
         return result;
+    }
+
+    @PostMapping("/test4")
+    public String test4(@RequestBody @Valid TestModel body){
+        log.info("test4:{}", body);
+        return "OK";
+    }
+
+    @PostMapping("/test5")
+    public String test5(@RequestBody @Valid @Min(value = 1, message = "TTTTTTTTTTT") Long id){
+        log.info("id:{}", id);
+        return "OK";
     }
 }

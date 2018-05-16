@@ -26,10 +26,11 @@ public class TaskProducerImpl implements TaskProducer {
      */
     @Async("myExecutor")
     @Override
-    public void offerTask(Object task) {
+    public int offerTask(Object task) {
         // 将task转换包装为命令对象，暂时认为task就是任务的命令对象
         log.info(String.format("当前方法所在的线程名为：%s，方法为%s", Thread.currentThread().getName(), "offerTask"));
         offerTasks(Collections.singletonList(task));
+        return 888;
     }
 
     @Async("myExecutor")

@@ -4,6 +4,8 @@ import me.silentdoer.springbootmybatis.pojo.Student;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * 也可以通过@Mapper而不用@MapperScan
  *
@@ -18,4 +20,7 @@ public interface StudentMapper {
      */
     @Select("select uid, name, gender from student where uid=#{uid}")
     Student selectStudentByPrimaryKey(@Param("uid") Long uid);
+
+    @Select("select uid, name, gender from student where 1=1")
+    List<Student> selectAll();
 }
