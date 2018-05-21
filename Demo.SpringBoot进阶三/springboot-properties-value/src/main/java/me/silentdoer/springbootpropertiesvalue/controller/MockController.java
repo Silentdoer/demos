@@ -1,9 +1,14 @@
 package me.silentdoer.springbootpropertiesvalue.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import me.silentdoer.springbootpropertiesvalue.config.TestConfig;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +24,8 @@ import javax.validation.Valid;
 @RestController
 // 貌似默认就是UTF-8，但是最好还是显式指定；如果@Value不需要扫描.properties文件那么可以不用这个注解
 @PropertySource(value = {"classpath:config/pair.properties"}, encoding = "UTF-8")
-public class MockController {
+public class MockController implements BeanFactoryAware {
+    private DefaultListableBeanFactory beanFactory;
     /**
      * `@Value`就是由Spring扫描动态的将@Value中的value成员的值赋予foo，这里是用字面量来赋值，还可以通过${config.key1}来获取配置文件的值（properties/可以）
      * xx.yml的不可以，或者说即便是yml的Spring在@Value时也将xx.yml认为是xx.properties文件
@@ -50,6 +56,18 @@ public class MockController {
     private static String mmm;
 
     /**
+     * TODO 经过测试application.properties的key引用起来是可以不用在Controller上面@PropertySource的
+     */
+    @Value("${me.ss:mmmmmmms}")
+    private String sst;
+
+    /**
+     * TODO 经过测试，不仅仅是application.properties的可以直接获取，application-xx.properties的也可以获取（哪怕application.properties和-xx同时存在那两个都可以获取）
+     */
+    @Value("${uu.bb}")
+    private String ssmo;
+
+    /**
      * 经过测试静态成员不能注册bean，且如果用@Resource还会直接报错，而@Autowired即便没有报错也是获取不到正确值的；
      * TODO 哪怕Bean是单个也一样获取不到；
      */
@@ -63,5 +81,16 @@ public class MockController {
         log.info(test);
         log.info(MockController.mmm);
         log.info(String.valueOf(MockController.testBean == null));
+        log.info("{},{}", this.sst, this.ssmo);
+    }
+
+    @GetMapping("/test2")
+    public void test2(){
+        log.info("{}", this.beanFactory.getBeanNamesForType(TestConfig.class)[0]);
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = (DefaultListableBeanFactory) beanFactory;
     }
 }

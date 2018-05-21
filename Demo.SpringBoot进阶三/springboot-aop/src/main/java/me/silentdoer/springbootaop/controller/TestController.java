@@ -53,4 +53,9 @@ public class TestController {
         log.info("test6");
         this.testService.service4(33, "MM");
     }
+
+    @DeleteMapping("/test7")
+    public void test7(){
+        log.info("test7");
+    }
 }

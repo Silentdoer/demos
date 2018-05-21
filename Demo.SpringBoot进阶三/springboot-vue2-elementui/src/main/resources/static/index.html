@@ -75,6 +75,7 @@
     <!-- TODO 注意，这里的pageSize只是用来渲染该怎么显示 toolbar的（多少个页按钮），根真正每页是多少无关，比如total是5，而page-size是1那么就有5个页按钮，但是每页真正显示多少由获取的
      TODO 真实数据决定，@current-change表示toolbar的当前页发生改变时（包括按pre/next/jumper等按钮）调用vm的findAll方法-->
     <!-- layout的total会显示：共n条，prev则会有<箭头的按钮pager会有1|2|3...之类的页按钮，next有>按钮，jumper有：前往[]页按钮 -->
+    <!-- 经过测试currentPage不能改为$currentPage或${currentPage} -->
     <el-col class="toolbar" style="padding:10px;">
         <el-pagination @current-change="findAll" :current-page="currentPage" :page-size="pageSize"
                        layout="total, prev, pager, next, jumper" :total="total" style="float:right"></el-pagination>
