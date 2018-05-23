@@ -20,8 +20,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import sun.misc.BASE64Encoder;
-import sun.misc.BASE64Decoder;
 
 //import org.apache.commons.codec.binary.Base64;
 
@@ -32,8 +30,8 @@ public class MyRSA {
     public static final String PUBLIC_KEY = "publicKey";
     public static final String PRIVATE_KEY = "privateKey";
 
-    /** RSA密钥长度必须是 64 的倍数，在512~65536之间。默认是1024 */
-    public static final int KEY_SIZE = 2048;
+    /** RSA密钥长度必须是 64 的倍数，在512~65536之间。默认是1024，一般至少要2048以上 */
+    public static final int KEY_SIZE = 4096;
 
     public static final String PLAIN_TEXT = "MANUTD is the greatest中文来来来 club in the world";
 
