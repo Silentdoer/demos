@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta urlDecodeCharset="UTF-8">
+    <title>标题</title>
+</head>
+<body>
+<h1>啦啦啦</h1>
+<!-- form这里只能选择get和post -->
+<form action="/upload" enctype="multipart/form-data" method="post">
+    <!-- html5里面对元素的要求不是那么严格，比如这里即便再多几个空<div>也没有关系，fieldset是会外围有个框 -->
+    <fieldset>
+        <!-- multiple是可以一次性选择多个文件，类似check，而没有这个的类似radio -->
+        <input type="file" name="file" multiple="multiple"><br>
+        <input type="file" name="file">
+    </fieldset>
+    <input type="submit" value="上传多个文件">
+</form>
+</body>
+</html>
