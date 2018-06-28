@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -39,6 +41,13 @@ public class FileController {
         // C:\Users\liqi.wang\AppData\Local\Temp\tomcat-docbase.8677821132225813541.8080\,
         log.info("{},{}", realPath, contextPath);
 
+        Arrays.stream(files).forEach(e -> {
+            try {
+                System.out.println(e.getBytes().length);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
         /*
         if(!file.isEmpty()){
             String fileName = file.getOriginalFilename();

@@ -14,13 +14,14 @@ import javax.servlet.Filter;
 @Configuration
 public class InfrastructureConfig {
 
-    @Bean
+    /*@Bean
     public FilterRegistrationBean<Filter> reuseInputStreamFilterBean(){
         FilterRegistrationBean<Filter> result = new FilterRegistrationBean<>();
         result.setFilter(new InputStreamReuseFilter());
+        // SpringBoot默认有几个order小于等于0的，所以这里要设置
         result.setOrder(Integer.MIN_VALUE);
         result.setName("reuseInputStreamFilter");
         result.addUrlPatterns("/*");
         return result;
-    }
+    }*/
 }

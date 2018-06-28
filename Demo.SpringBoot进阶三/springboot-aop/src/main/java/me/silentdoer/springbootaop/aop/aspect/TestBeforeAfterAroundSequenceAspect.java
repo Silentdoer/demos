@@ -3,10 +3,7 @@ package me.silentdoer.springbootaop.aop.aspect;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -34,6 +31,17 @@ public class TestBeforeAfterAroundSequenceAspect {
     @After("@annotation(org.springframework.web.bind.annotation.DeleteMapping) && @annotation(deleteMapping)")
     public void after(JoinPoint jp, DeleteMapping deleteMapping){
         log.info("Method:{},AnnotationValue:{},after", jp.getSignature().getName(), Arrays.asList(deleteMapping.value()));
+    }
+
+    /**
+     * 相比@After而言，這個可以指定return的值
+     */
+    @AfterReturning(pointcut="@annotation(org.springframework.web.bind.annotation.DeleteMapping)" +
+            " && @annotation(deleteMapping)", returning = "result")
+    public void log(JoinPoint jp, DeleteMapping deleteMapping, Object result)
+    {
+        log.info("Method:{},AnnotationValue:{},after, returned value:{}", jp.getSignature().getName(),
+                Arrays.asList(deleteMapping.value()), result);
     }
 
     @Around("@annotation(org.springframework.web.bind.annotation.DeleteMapping) && @annotation(deleteMapping)")

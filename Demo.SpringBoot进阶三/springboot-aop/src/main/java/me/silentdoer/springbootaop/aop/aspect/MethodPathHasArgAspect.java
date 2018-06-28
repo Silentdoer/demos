@@ -21,7 +21,7 @@ public class MethodPathHasArgAspect {
     }
 
     /**
-     * TODO 重要，原来args可以不写在@Pointcut里
+     * TODO 重要，原来args可以不写在@Pointcut里，args是和@annotation对应等级的参数，它和argNames不一样，而且jdk8可以不用argNames
      * TODO 如果没有argNames，那么默认外面传的值从左往右分别对应 a和b，但是如果要反过来对应看before2
      * @param jp
      * @param a

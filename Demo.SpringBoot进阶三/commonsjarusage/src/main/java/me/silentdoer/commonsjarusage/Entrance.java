@@ -1,5 +1,6 @@
 package me.silentdoer.commonsjarusage;
 
+import net.sf.cglib.beans.BeanMap;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.BagUtils;

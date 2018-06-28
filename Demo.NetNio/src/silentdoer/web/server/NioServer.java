@@ -1,27 +1,25 @@
 package silentdoer.web.server;
 
-import org.jetbrains.annotations.NotNull;
-import silentdoer.web.model.NioMessage;
-import silentdoer.web.util.Bootable;
 import silentdoer.web.util.TCPBootable;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.net.*;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.channels.spi.SelectorProvider;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 一个NIO Demo的服务端实现，也可以实现Runnable接口，然后run()方法就相当于start
@@ -53,12 +51,23 @@ public class NioServer implements TCPBootable {
         cachedClient = new ConcurrentHashMap<>(3);
 
         class DaemonThreadFactory implements ThreadFactory{
+            private String threadNamePrefix = "thread-exec-{}";
+
             @Override
-            public Thread newThread(@NotNull Runnable r) {
+            public Thread newThread(Runnable r) {
                 Thread t = new Thread(r);
                 t.setDaemon(true);
                 t.setName(r.toString());
                 return t;
+            }
+
+
+            public String getThreadNamePrefix() {
+                return threadNamePrefix;
+            }
+
+            public void setThreadNamePrefix(String threadNamePrefix) {
+                this.threadNamePrefix = threadNamePrefix;
             }
         }
         //threadPool = Executors.newCachedThreadPool(Executors.defaultThreadFactory());
@@ -97,6 +106,7 @@ public class NioServer implements TCPBootable {
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);  // 还有个Attachment
         // 注意这里只有一个ServerSocketChannel可能不太好看出来Selector的作用，如果这里再加一个ServerSocketChannel也注册到该selector上
         state = NioServerStateEnum.RUNNING;
+
         handleServer();
     }
 

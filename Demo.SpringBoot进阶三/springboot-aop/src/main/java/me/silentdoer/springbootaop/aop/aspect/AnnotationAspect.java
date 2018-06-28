@@ -80,6 +80,10 @@ public class AnnotationAspect implements ApplicationContextAware {
         }
     }
 
+    /**
+     * TODO 注意，只要是bean就可以进行aop，而不是只能是controller
+     * @param pjp
+     */
     @Around("pointcutMapping()")
     public void aroundMapping(ProceedingJoinPoint pjp){
         MethodSignature signature = ((MethodSignature) pjp.getSignature());

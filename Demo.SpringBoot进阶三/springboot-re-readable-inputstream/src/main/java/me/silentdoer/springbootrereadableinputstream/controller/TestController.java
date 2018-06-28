@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -29,5 +31,11 @@ public class TestController {
         log.info("{}, {}", request.getCharacterEncoding(), request.getInputStream().available());
         log.info("{}", new String(IOUtils.toByteArray(request.getInputStream()), StandardCharsets.UTF_8));
         return "OK";
+    }
+
+    @PostMapping("/test3")
+    public String test3(InputStream inputStream) throws IOException {
+        log.info("{}, {}", inputStream.available());
+        return "O222K";
     }
 }

@@ -20,6 +20,7 @@ public class TestController {
 
     @GetMapping("/test1")
     public String test1(){
+        // doService是@Retryable，但是它是同步方法不像@Async一样
         this.testService.doService(3L);
         return "OK";
     }

@@ -1,6 +1,8 @@
 package me.silentdoer.springbootrereadableinputstream.filter;
 
 import me.silentdoer.springbootrereadableinputstream.support.ReuseInputStreamServletRequest;
+import org.springframework.util.Assert;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +24,11 @@ public class InputStreamReuseFilter implements Filter {
         if(!(request instanceof HttpServletRequest) || !(response instanceof HttpServletResponse)) {
             throw new IllegalArgumentException("不支持的参数");
         }
-        ReuseInputStreamServletRequest requestWrapper = new ReuseInputStreamServletRequest((HttpServletRequest) request);
-        chain.doFilter(requestWrapper, response);
+        Assert.notNull(request, "request 不能为null");
+        //ReuseInputStreamServletRequest requestWrapper = new ReuseInputStreamServletRequest((HttpServletRequest) request);
+        // SpringBoot自带了相关实现类；
+        //ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(((HttpServletRequest) request));
+        chain.doFilter(request, response);
     }
 
     @Override

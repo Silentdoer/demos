@@ -64,4 +64,12 @@ public class MockController {
     public void test4(HttpSession httpSession){
         log.info(StringUtils.join(redisTemplate.keys("*").size()));
     }
+
+    @GetMapping("/test5")
+    public String test5() {
+       // this.redisTemplate.opsForValue().set("silentdoer", "理解额77");
+        Object silentdoer = this.redisTemplate.opsForValue().get("silentdoer");
+        log.error((silentdoer == null) + "");
+        return silentdoer.toString();
+    }
 }
