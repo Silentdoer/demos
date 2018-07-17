@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.silentdoer.springbootmybatis.dao.StudentMapper;
 import me.silentdoer.springbootmybatis.pojo.Student;
 import me.silentdoer.springbootmybatis.service.StudentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
         //pageInfo.getPageSize();
         PageInfo<Student> pageInfo = PageHelper.startPage(2, pageSize, "uid").doSelectPageInfo(() -> studentMapper.selectAll());
         // pageSizes() 共两页,getPageSize()，pageNum是当前页是第几页，total是总共多少条记录，
-        log.info("{},{},{},{},{},{},{},{},{},{},{},{},{}", pageInfo.getPages(), pageInfo.getPageSize(), pageInfo.getPageNum(), pageInfo.getTotal(), pageInfo.getStartRow(),
+        log.info(StringUtils.repeat("{}", ",", 13), pageInfo.getPages(), pageInfo.getPageSize(), pageInfo.getPageNum(), pageInfo.getTotal(), pageInfo.getStartRow(),
                 pageInfo.getEndRow(), pageInfo.getPrePage(), pageInfo.getNextPage(), pageInfo.getSize(), pageInfo.isIsLastPage(), pageInfo.isHasNextPage(),
                 pageInfo.isHasPreviousPage(), pageInfo.isHasPreviousPage());
         List<Student> list = pageInfo.getList();

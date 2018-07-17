@@ -35,9 +35,12 @@ public class MockController {
      */
     @RequestMapping("/test1")
     public String test1(){
-        // TODO 很重要的测试，既然是异步执行那么mm值会是什么呢？？（@Async似乎就是.net 4中的async关键字，用async关键字描述的方法会被CLR放到线程池里执行）
-        // TODO @Async应该也是用动态代理实现的，然后intercept方法内直接返回一个null，因此有返回值和没有返回值都无所谓最终都会是null
-        // TODO 如果返回的是基础类型，那么也是返回null，如Long l = null;long m = l;是编译不报错但是运行报错的；（null可以匹配任意引用类型）
+        /* TODO 很重要的测试，既然是异步执行那么mm值会是什么呢？？（@Async似乎就是.net 4中的async关键字
+        ，用async关键字描述的方法会被CLR放到线程池里执行）
+         @Async应该也是用动态代理实现的，然后intercept方法内直接返回一个null，因此有返回值和没有返回值都无所谓最终都会是null
+        如果返回的是基础类型，那么也是返回null，如Long l = null;long m = l;是编译不报错但是运行报错的；（null可以匹配任意引用类型）
+        */
+
         /*int mm = */taskProducer.offerTask(new Object());
         //System.err.println("HHHHHHHHHH".concat(mm + ""));
         log.info(String.format("当前方法所在的线程名为：%s", Thread.currentThread().getName()));

@@ -29,7 +29,7 @@ public class NeedPassMyValid implements MyBeforeAdvice {
             "|| @annotation(org.springframework.web.bind.annotation.PostMapping)")
     public void pointcut1(){}
 
-    final Pattern JUST_NUMBER = Pattern.compile("^\\d*$");
+    private final Pattern JUST_NUMBER = Pattern.compile("^\\d*$");
 
     @Before("pointcut1()")
     @Override
