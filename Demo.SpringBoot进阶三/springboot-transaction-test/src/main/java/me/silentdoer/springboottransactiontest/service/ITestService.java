@@ -10,5 +10,5 @@ import lombok.extern.slf4j.Slf4j;
  * @since 7/9/2018 6:30 PM
  */
 public interface ITestService {
-    int addStudent(String name, Character gender);
+    int addStudent(String name, Character gender, Boolean rollback);
 }

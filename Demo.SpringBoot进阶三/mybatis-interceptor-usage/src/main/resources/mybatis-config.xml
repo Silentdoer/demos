@@ -11,9 +11,10 @@
     </settings>-->
 
     <plugins>
-        <plugin interceptor="me.silentdoer.mybatisinterceptorusage.support.mybatis.interceptor.SqlPrintInterceptor">
+        <plugin interceptor="me.silentdoer.mybatisinterceptorusage.support.mybatis.interceptor.PaginateSqlInterceptor">
             <!-- 注意这个设置的property所有都会作为key-value存储到Interceptor的setProperties(Properties properties)的properties里 -->
             <property name="dialect" value="mysql" />
+            <property name="enable" value="true"/>
         </plugin>
 
         <!--<plugin interceptor="me.silentdoer.mybatisinterceptorusage.support.mybatis.interceptor.SqlPrintInterceptor2"/>-->

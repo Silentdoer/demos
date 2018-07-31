@@ -42,10 +42,10 @@ public class TestServiceImpl implements ITestService {
     @Override
     // 这个注解会是的addStudent(..)内如果存在要用到mybatis的session的操作就会开启事务（如果当前线程没有事务，即没有其他开启了事务的方法调用了本方法）
     // TODO 经过测试这里的rollbackFor的Exception是只要是其子类即可并非精确匹配
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     // TODO 配置为 readOnly = true（默认是false），那么如果这个方法内部的Mapper不是只有select那么会抛异常，而且不存在回滚的说法，因为select不需要回滚
     //@Transactional(readOnly = true)
-    public int addStudent(String name, Character gender) {
+    public int addStudent(String name, Character gender, Boolean rollback) {
 
         // TODO 由于开启了事务，因此自动提交被关闭，那么这里insert本质上是insert到当前session的缓存里，如果整个完整的事务没有抛异常，
         // 那么就会自动提交（即外部的finally会commit，catch会根据rollbackFor等策略选择性rollback，这里的策略还要根据传播特性来决定）
@@ -54,8 +54,11 @@ public class TestServiceImpl implements ITestService {
         /*Connection connection;
         connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);*/
 
-        // TODO 由于这里抛了异常，会导致上面的insert语句回滚（session缓存的insert的数据会被清除），所以数据库里是看不到数据的
-        if (true) {
+        // TODO 由于这里抛了异常，会导致上面的insert语句回滚（session缓存的insert的数据会被清除，
+        // 因为开启了事务会将自动提交设置为false，所有没有commit之前insert的数据是存储在和数据库连接的session缓存里的），
+        // 所以数据库里是看不到数据的（应该说是另一个连接/Session）
+        // TODO 注意，这里抛出了异常后，首先是回滚，然后这个异常是会继续  往上抛给调用者的
+        if (rollback) {
             throw new RuntimeException("ssss");
         }
         return count;

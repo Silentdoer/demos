@@ -25,8 +25,16 @@ public class TestController {
     private ITestService testService;
 
     @GetMapping("/test")
-    public Boolean test(@RequestParam("name") String name, @RequestParam("gender") Character gender) {
-        int i = this.testService.addStudent(name, gender);
+    public Boolean test(@RequestParam("name") String name, @RequestParam("gender") Character gender,
+                        @RequestParam(value = "rollback", required = false, defaultValue = "false") Boolean rollback) {
+        log.info("{}, {}, {}", name, gender, rollback);
+        int i = -1;
+        try {
+            i = this.testService.addStudent(name, gender, rollback);
+        } catch (Exception e) {
+            log.error("###, {}", e.toString());
+        }
+        log.info("{}", i);
         return i == 1;
     }
 }
