@@ -5,7 +5,7 @@
 
     <persistence directory="java.io.tmpdir"/>
 
-    <cache-template name="default">
+    <cache-template description="default">
         <resources>
             <heap unit="entries">2000</heap>
             <offheap unit="MB">100</offheap>

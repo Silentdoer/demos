@@ -33,6 +33,17 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sf.jsqlparser/jsqlparser -->
+        <!--<dependency>
+            <groupId>net.sf.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>0.8.0</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>1.0</version>
+        </dependency>
 
     </dependencies>
     

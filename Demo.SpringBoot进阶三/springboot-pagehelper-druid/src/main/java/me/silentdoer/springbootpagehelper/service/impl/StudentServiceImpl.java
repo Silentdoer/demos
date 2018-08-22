@@ -32,6 +32,7 @@ public class StudentServiceImpl implements IStudentService {
         // 这里的setOrderBy设置的是order by的后面的表达式而非需要orderBy的字段名，而且这里的pageNum和pageSize都是以先排序以后再取相关数据  而非先取数据然后排序
         List<StudentDo> studentDos = PageHelper.startPage(2, 2).setOrderBy("fd_id desc")
                 .doSelectPage(() -> studentMapper.selectRepeatableNameStudent(name));
+
         return studentDos;
     }
 }
