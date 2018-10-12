@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnw.user.persistence.UserMapper">
+    <resultMap id="BaseResultMap" type="com.mnw.user.model.User">
+        <id column="f_id" property="fId" jdbcType="INTEGER" />
+        <result column="f_name" property="fName" jdbcType="VARCHAR" />
+        <result column="f_src_uid" property="fSrcUid" jdbcType="VARCHAR" />
+        <result column="f_passwd" property="fPasswd" jdbcType="CHAR" />
+        <result column="f_pay_password" property="fPayPassword" jdbcType="CHAR" />
+        <result column="f_cellphone" property="fCellphone" jdbcType="CHAR" />
+        <result column="f_salt" property="fSalt" jdbcType="VARCHAR" />
+        <result column="f_id_card" property="fIdCard" jdbcType="CHAR" />
+        <result column="f_real_name" property="fRealName" jdbcType="VARCHAR" />
+        <result column="f_status" property="fStatus" jdbcType="TINYINT" />
+        <result column="f_remark" property="fRemark" jdbcType="VARCHAR" />
+        <result column="f_register_time" property="fRegisterTime" jdbcType="TIMESTAMP" />
+        <result column="f_verify_time" property="fVerifyTime" jdbcType="TIMESTAMP" />
+        <result column="f_update_time" property="fUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="f_idcard_verified" property="fIdcardVerified" jdbcType="TINYINT" />
+        <result column="f_sex" property="fSex" jdbcType="TINYINT" />
+        <result column="f_birthday" property="fBirthday" jdbcType="INTEGER" />
+        <result column="f_province_id" property="fProvinceId" jdbcType="INTEGER" />
+        <result column="f_city_id" property="fCityId" jdbcType="INTEGER" />
+        <result column="f_area_id" property="fAreaId" jdbcType="INTEGER" />
+        <result column="f_address" property="fAddress" jdbcType="VARCHAR" />
+        <result column="f_user_img" property="fUserImg" jdbcType="VARCHAR" />
+        <result column="f_cellphone_times" property="fCellphoneTimes" jdbcType="TINYINT" />
+        <result column="f_fail_login_times" property="fFailLoginTimes" jdbcType="TINYINT" />
+        <result column="f_paypwd_times" property="fPaypwdTimes" jdbcType="TINYINT" />
+        <result column="f_pay_fail_times" property="fPayFailTimes" jdbcType="TINYINT" />
+        <result column="f_invest_flag" property="fInvestFlag" jdbcType="TINYINT" />
+        <result column="f_withdraw_limit" property="fWithdrawLimit" jdbcType="DECIMAL" />
+        <result column="f_promotion_query_str" property="fPromotionQueryStr" jdbcType="VARCHAR" />
+        <result column="f_taofen8_user_id" property="fTaofen8UserId" jdbcType="VARCHAR" />
+        <result column="f_sms_type" property="fSmsType" jdbcType="INTEGER" />
+        <result column="f_from_type" property="fFromType" jdbcType="INTEGER" />
+        <result column="f_invest_type" property="fInvestType" jdbcType="INTEGER" />
+        <result column="f_financial_invest_type" property="fFinancialInvestType" jdbcType="INTEGER" />
+        <result column="f_invite_code" property="fInviteCode" jdbcType="VARCHAR" />
+        <result column="f_treasure_flag" property="fTreasureFlag" jdbcType="TINYINT" />
+        <result column="f_register_ip" property="fRegisterIp" jdbcType="VARCHAR" />
+        <result column="f_xw_activate" property="fXwActivate" jdbcType="TINYINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+	    f_id, f_name, f_src_uid, f_passwd, f_pay_password, f_cellphone, f_salt, f_id_card,
+	    f_real_name, f_status, f_remark, f_register_time, f_verify_time, f_update_time, f_idcard_verified,
+	    f_sex, f_birthday, f_province_id, f_city_id, f_area_id, f_address, f_user_img, f_cellphone_times,
+	    f_fail_login_times, f_paypwd_times, f_pay_fail_times, f_invest_flag, f_withdraw_limit,
+	    f_promotion_query_str, f_taofen8_user_id, f_sms_type, f_from_type, f_invest_type, f_financial_invest_type,
+	    f_invite_code, f_treasure_flag, f_register_ip, f_xw_activate
+	</sql>
+
+    <select id="myInviteList" resultMap="BaseResultMap">
+		select f_id, f_real_name, f_src_uid, f_cellphone,f_register_time from t_user where f_src_uid=#{userId} order by  f_id desc
+	</select>
+
+    <select id="allMyInviteUserNum" resultType="java.lang.Integer">
+		select COUNT(`f_id`) from t_user where f_src_uid=#{userId}
+	</select>
+
+    <select id="myInviteListWithPage" resultMap="BaseResultMap">
+		select f_id, f_real_name, f_src_uid, f_cellphone,f_register_time from t_user where f_src_uid=#{userId} order by  f_id desc
+	</select>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List" />
+        from t_user where f_id = #{fId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectVerifiedUserIdList" resultType="java.lang.Integer">
+		select f_id from t_user where f_id_card is not null and f_id_card != ''
+	</select>
+
+    <select id="selectTaofen8BindUserByUids" resultType="com.manaowan.api.common.model.SimpleFieldQueryModel">
+        select f_id as field1, f_taofen8_user_id as field2 from t_user where f_taofen8_user_id is not null
+        and f_taofen8_user_id != '' and f_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectAllBindCardTaofen8User" resultType="com.manaowan.api.common.model.SimpleFieldQueryModel">
+		SELECT f_taofen8_user_id as field1, if(`f_verify_time` is null,`f_register_time`,`f_verify_time` ) as field2
+		from t_user where `f_idcard_verified` = 2 and `f_taofen8_user_id` is not null and `f_taofen8_user_id` != ''
+	</select>
+
+    <select id="selectAllBindCardUserWithRegisterTime" resultType="com.manaowan.api.common.model.IdDatetimeModel">
+		SELECT `f_id` as fId, `f_register_time` as datetime
+		from t_user where `f_idcard_verified` = 2 and f_status = 1 order by f_id desc
+	</select>
+
+    <select id="selectAllNewUserWithRegisterTime" resultType="com.manaowan.api.common.model.IdDatetimeModel">
+		SELECT `f_id` as fId, `f_register_time` as datetime
+		from t_user where f_status = 1 order by f_id desc
+	</select>
+
+    <select id="forTest" resultType="com.manaowan.api.common.model.IdDatetimeModel">
+		SELECT `f_id` as fId, `f_register_time` as datetime
+		from t_user where f_status = 1 order by f_id desc limit #{start}, #{length}
+	</select>
+
+    <select id="forTest2" resultType="com.manaowan.api.common.model.IdDatetimeModel">
+		SELECT `f_id` as fId, `f_register_time` as datetime
+		from t_user where f_status = 1 order by f_id desc limit 500
+	</select>
+
+    <select id="forTest3" resultType="com.manaowan.api.common.model.IdDatetimeModel">
+		SELECT `f_id` as fId, `f_register_time` as datetime
+		from t_user where f_status = 1 order by f_id desc
+	</select>
+
+    <select id="springfestivalInviteWhiteList" resultType="com.manaowan.api.market.model.SpringFestivalWhiteList">
+		SELECT f_id as userId,`f_src_uid` as  src , f_cellphone as cellphone  FROM t_user
+		where `f_src_uid` !='0' and `f_invest_flag` = 0 and `f_status` =1
+	</select>
+
+    <select id="birthdayList" resultMap="BaseResultMap">
+        select f_id,f_id_card, f_real_name from t_user where f_idcard_verified = 2
+        <choose>
+            <when test="flag ==1">
+                and ( f_id_card like '%0229%' or f_id_card like '%0301%')
+            </when>
+            <when test="flag ==0">
+                and ( f_id_card like CONCAT('%',#{searchStr},'%') )
+            </when>
+        </choose>
+    </select>
+
+    <select id="selectByInviteCode" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_user where f_invite_code = #{inviteCode}
+    </select>
+
+    <select id="selectByPhone" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_user
+        where f_cellphone = #{fCellphone,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPhoneOrName" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_user
+        where f_cellphone = #{account}
+    </select>
+
+    <select id="selectUserByIDCard" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_user
+        where f_id_card = #{fidCard,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByTaofen8UserId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_user
+        where f_taofen8_user_id = #{fTaofen8UserId,jdbcType=VARCHAR} order by f_id desc limit 1
+    </select>
+
+    <!-- 获得淘粉吧用户指定日期的用户和绑卡时间 -->
+    <select id="getTaofen8UserAndBindTimeByDate" resultType="com.manaowan.api.common.model.SimpleFieldQueryModel">
+	    SELECT f_taofen8_user_id as field1, f_verify_time as field2 FROM t_user where f_taofen8_user_id IS NOT NULL
+	    AND f_taofen8_user_id != '' AND date(f_verify_time) = #{date,jdbcType=VARCHAR}
+	</select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="fId" parameterType="User">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="fId != null" >
+                f_id,
+            </if>
+            <if test="fName != null" >
+                f_name,
+            </if>
+            <if test="fSrcUid != null" >
+                f_src_uid,
+            </if>
+            <if test="fPasswd != null" >
+                f_passwd,
+            </if>
+            <if test="fPayPassword != null" >
+                f_pay_password,
+            </if>
+            <if test="fCellphone != null" >
+                f_cellphone,
+            </if>
+            <if test="fSalt != null" >
+                f_salt,
+            </if>
+            <if test="fIdCard != null" >
+                f_id_card,
+            </if>
+            <if test="fRealName != null" >
+                f_real_name,
+            </if>
+            <if test="fStatus != null" >
+                f_status,
+            </if>
+            <if test="fRemark != null" >
+                f_remark,
+            </if>
+            <if test="fRegisterTime != null" >
+                f_register_time,
+            </if>
+            <if test="fVerifyTime != null" >
+                f_verify_time,
+            </if>
+            <if test="fUpdateTime != null" >
+                f_update_time,
+            </if>
+            <if test="fIdcardVerified != null" >
+                f_idcard_verified,
+            </if>
+            <if test="fSex != null" >
+                f_sex,
+            </if>
+            <if test="fBirthday != null" >
+                f_birthday,
+            </if>
+            <if test="fProvinceId != null" >
+                f_province_id,
+            </if>
+            <if test="fCityId != null" >
+                f_city_id,
+            </if>
+            <if test="fAreaId != null" >
+                f_area_id,
+            </if>
+            <if test="fAddress != null" >
+                f_address,
+            </if>
+            <if test="fUserImg != null" >
+                f_user_img,
+            </if>
+            <if test="fCellphoneTimes != null" >
+                f_cellphone_times,
+            </if>
+            <if test="fFailLoginTimes != null" >
+                f_fail_login_times,
+            </if>
+            <if test="fPaypwdTimes != null" >
+                f_paypwd_times,
+            </if>
+            <if test="fPayFailTimes != null" >
+                f_pay_fail_times,
+            </if>
+            <if test="fInvestFlag != null" >
+                f_invest_flag,
+            </if>
+            <if test="fWithdrawLimit != null" >
+                f_withdraw_limit,
+            </if>
+            <if test="fPromotionQueryStr != null" >
+                f_promotion_query_str,
+            </if>
+            <if test="fTaofen8UserId != null" >
+                f_taofen8_user_id,
+            </if>
+            <if test="fSmsType != null" >
+                f_sms_type,
+            </if>
+            <if test="fFromType != null" >
+                f_from_type,
+            </if>
+            <if test="fInvestType != null" >
+                f_invest_type,
+            </if>
+            <if test="fInviteCode != null" >
+                f_invite_code,
+            </if>
+            <if test="fTreasureFlag != null" >
+                f_treasure_flag,
+            </if>
+            <if test="fRegisterIp != null" >
+                f_register_ip,
+            </if>
+            <if test="fXwActivate != null" >
+                f_xw_activate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="fId != null" >
+                #{fId,jdbcType=INTEGER},
+            </if>
+            <if test="fName != null" >
+                #{fName,jdbcType=VARCHAR},
+            </if>
+            <if test="fSrcUid != null" >
+                #{fSrcUid,jdbcType=VARCHAR},
+            </if>
+            <if test="fPasswd != null" >
+                #{fPasswd,jdbcType=CHAR},
+            </if>
+            <if test="fPayPassword != null" >
+                #{fPayPassword,jdbcType=CHAR},
+            </if>
+            <if test="fCellphone != null" >
+                #{fCellphone,jdbcType=CHAR},
+            </if>
+            <if test="fSalt != null" >
+                #{fSalt,jdbcType=VARCHAR},
+            </if>
+            <if test="fIdCard != null" >
+                #{fIdCard,jdbcType=CHAR},
+            </if>
+            <if test="fRealName != null" >
+                #{fRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="fStatus != null" >
+                #{fStatus,jdbcType=TINYINT},
+            </if>
+            <if test="fRemark != null" >
+                #{fRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="fRegisterTime != null" >
+                #{fRegisterTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fVerifyTime != null" >
+                #{fVerifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fUpdateTime != null" >
+                #{fUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fIdcardVerified != null" >
+                #{fIdcardVerified,jdbcType=TINYINT},
+            </if>
+            <if test="fSex != null" >
+                #{fSex,jdbcType=TINYINT},
+            </if>
+            <if test="fBirthday != null" >
+                #{fBirthday,jdbcType=INTEGER},
+            </if>
+            <if test="fProvinceId != null" >
+                #{fProvinceId,jdbcType=INTEGER},
+            </if>
+            <if test="fCityId != null" >
+                #{fCityId,jdbcType=INTEGER},
+            </if>
+            <if test="fAreaId != null" >
+                #{fAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="fAddress != null" >
+                #{fAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="fUserImg != null" >
+                #{fUserImg,jdbcType=VARCHAR},
+            </if>
+            <if test="fCellphoneTimes != null" >
+                #{fCellphoneTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fFailLoginTimes != null" >
+                #{fFailLoginTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fPaypwdTimes != null" >
+                #{fPaypwdTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fPayFailTimes != null" >
+                #{fPayFailTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fInvestFlag != null" >
+                #{fInvestFlag,jdbcType=TINYINT},
+            </if>
+            <if test="fWithdrawLimit != null" >
+                #{fWithdrawLimit,jdbcType=DECIMAL},
+            </if>
+            <if test="fPromotionQueryStr != null" >
+                #{fPromotionQueryStr,jdbcType=VARCHAR},
+            </if>
+            <if test="fTaofen8UserId != null" >
+                #{fTaofen8UserId,jdbcType=VARCHAR},
+            </if>
+            <if test="fSmsType != null" >
+                #{fSmsType,jdbcType=INTEGER},
+            </if>
+            <if test="fFromType != null" >
+                #{fFromType,jdbcType=INTEGER},
+            </if>
+            <if test="fInvestType != null" >
+                #{fInvestType,jdbcType=INTEGER},
+            </if>
+            <if test="fInviteCode != null" >
+                #{fInviteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fTreasureFlag != null" >
+                #{fTreasureFlag,jdbcType=TINYINT},
+            </if>
+            <if test="fRegisterIp != null" >
+                #{fRegisterIp,jdbcType=VARCHAR},
+            </if>
+            <if test="fXwActivate != null" >
+                #{fXwActivate,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="User">
+        update t_user
+        <set >
+            <if test="fName != null" >
+                f_name = #{fName,jdbcType=VARCHAR},
+            </if>
+            <if test="fSrcUid != null" >
+                f_src_uid = #{fSrcUid,jdbcType=VARCHAR},
+            </if>
+            <if test="fPasswd != null" >
+                f_passwd = #{fPasswd,jdbcType=CHAR},
+            </if>
+            <if test="fPayPassword != null" >
+                f_pay_password = #{fPayPassword,jdbcType=CHAR},
+            </if>
+            <if test="fCellphone != null" >
+                f_cellphone = #{fCellphone,jdbcType=CHAR},
+            </if>
+            <if test="fSalt != null" >
+                f_salt = #{fSalt,jdbcType=VARCHAR},
+            </if>
+            <if test="fIdCard != null" >
+                f_id_card = #{fIdCard,jdbcType=CHAR},
+            </if>
+            <if test="fRealName != null" >
+                f_real_name = #{fRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="fStatus != null" >
+                f_status = #{fStatus,jdbcType=TINYINT},
+            </if>
+            <if test="fRemark != null" >
+                f_remark = #{fRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="fRegisterTime != null" >
+                f_register_time = #{fRegisterTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fVerifyTime != null" >
+                f_verify_time = #{fVerifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fUpdateTime != null" >
+                f_update_time = #{fUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fIdcardVerified != null" >
+                f_idcard_verified = #{fIdcardVerified,jdbcType=TINYINT},
+            </if>
+            <if test="fSex != null" >
+                f_sex = #{fSex,jdbcType=TINYINT},
+            </if>
+            <if test="fBirthday != null" >
+                f_birthday = #{fBirthday,jdbcType=INTEGER},
+            </if>
+            <if test="fProvinceId != null" >
+                f_province_id = #{fProvinceId,jdbcType=INTEGER},
+            </if>
+            <if test="fCityId != null" >
+                f_city_id = #{fCityId,jdbcType=INTEGER},
+            </if>
+            <if test="fAreaId != null" >
+                f_area_id = #{fAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="fAddress != null" >
+                f_address = #{fAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="fUserImg != null" >
+                f_user_img = #{fUserImg,jdbcType=VARCHAR},
+            </if>
+            <if test="fCellphoneTimes != null" >
+                f_cellphone_times = #{fCellphoneTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fFailLoginTimes != null" >
+                f_fail_login_times = #{fFailLoginTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fPaypwdTimes != null" >
+                f_paypwd_times = #{fPaypwdTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fPayFailTimes != null" >
+                f_pay_fail_times = #{fPayFailTimes,jdbcType=TINYINT},
+            </if>
+            <if test="fInvestFlag != null" >
+                f_invest_flag = #{fInvestFlag,jdbcType=TINYINT},
+            </if>
+            <if test="fWithdrawLimit != null" >
+                f_withdraw_limit = #{fWithdrawLimit,jdbcType=DECIMAL},
+            </if>
+            <if test="fPromotionQueryStr != null" >
+                f_promotion_query_str = #{fPromotionQueryStr,jdbcType=VARCHAR},
+            </if>
+            <if test="fTaofen8UserId != null" >
+                f_taofen8_user_id = #{fTaofen8UserId,jdbcType=VARCHAR},
+            </if>
+            <if test="fSmsType != null" >
+                f_sms_type = #{fSmsType,jdbcType=INTEGER},
+            </if>
+            <if test="fFromType != null" >
+                f_from_type = #{fFromType,jdbcType=INTEGER},
+            </if>
+            <if test="fInvestType != null" >
+                f_invest_type = #{fInvestType,jdbcType=INTEGER},
+            </if>
+            <if test="fInviteCode != null" >
+                f_invite_code = #{fInviteCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fTreasureFlag != null" >
+                f_treasure_flag = #{fTreasureFlag,jdbcType=TINYINT},
+            </if>
+            <if test="fRegisterIp != null" >
+                f_register_ip = #{fRegisterIp,jdbcType=VARCHAR},
+            </if>
+            <if test="fXwActivate != null" >
+                f_xw_activate = #{fXwActivate,jdbcType=TINYINT},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateCellphone" parameterType="User">
+        update t_user
+        <set>
+            <if test="fCellphone != null">
+                f_cellphone = #{fCellphone,jdbcType=CHAR},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateAvatar" parameterType="User">
+        update t_user
+        <set>
+            <if test="fUserImg != null">
+                f_user_img = #{fUserImg,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateInviteCode" parameterType="User">
+        update t_user
+        <set>
+            <if test="fInviteCode != null" >
+                f_invite_code = #{fInviteCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateAddress" parameterType="User">
+        update t_user
+        <set>
+            <if test="fProvinceId != null">
+                f_province_id = #{fProvinceId,jdbcType=INTEGER},
+            </if>
+            <if test="fCityId != null">
+                f_city_id = #{fCityId,jdbcType=INTEGER},
+            </if>
+            <if test="fAreaId != null">
+                f_area_id = #{fAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="fAddress != null">
+                f_address = #{fAddress,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="unBindTaofen8Id" parameterType="User">
+        update t_user
+        <set>
+            <if test="fTaofen8UserId != null">
+                f_taofen8_user_id = #{fTaofen8UserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateUserStatus" parameterType="User">
+        update t_user
+        <set>
+            <if test="fStatus != null">
+                f_status = #{fStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateTreasureFlag" parameterType="com.manaowan.api.market.model.UserTreasureFlag">
+        update t_user
+        <set>
+            <if test="treasureFlag != null">
+                f_treasure_flag = #{treasureFlag,jdbcType=INTEGER}
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateFinancialInvestType" parameterType="User">
+        update t_user
+        <set>
+            <if test="fFinancialInvestType != null">
+                f_financial_invest_type = #{fFinancialInvestType,jdbcType=INTEGER}
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <select id="registerNumer" resultType="java.lang.Integer">
+		SELECT COUNT(f_id) FROM t_user WHERE f_register_time <![CDATA[ < ]]> #{deadline}
+	</select>
+
+    <select id="selectByIdCard" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+		select f_id from t_user
+		where f_id_card = #{fIdCard,jdbcType=CHAR}
+	</select>
+
+    <sql id="invitationAwardSql">
+		SELECT count(1) FROM t_user t1
+		LEFT JOIN t_user_invest_history t2 ON t1.f_id = t2.f_user_id
+	</sql>
+    <select id="selectUserNameCount" resultType="java.lang.Integer">
+		SELECT count(f_id) FROM t_user where f_name = #{userName}
+	</select>
+</mapper>

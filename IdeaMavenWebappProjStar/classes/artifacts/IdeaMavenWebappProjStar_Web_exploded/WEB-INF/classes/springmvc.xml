@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="false">
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/plain;charset=UTF-8"/>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/plain;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 这里更改后可以不Ctrl+S保存，运行tomcat会自动保存整个项目，和VS一样和eclipse不一样 -->
+    <!-- 这样子看可能不好理解location的值有什么用，但是如果换成：<mvc:resources mapping="/static/**" location="/res/"/> 就好理解了，
+            springMVC如果接收到符合/static/**的静态资源请求那么会从/res/下按要求路径找资源，经过测试确实是这样，引用为：<link href="/static/css/style.css" rel="stylesheet" />；配置这里换成location="res/css/"也可以使css成功引用 -->
+    <!-- 经过测试，它的匹配原理是，如上href="/static/css/style.css"符合mapping="/static/**"的规则，因此提取后面的部分，即css/style.css以路径的形式拼接（故/res和/res/都可以）为一个新地址即/res/css/style.css找到这个文件返回给请求者 -->
+    <!-- 测试方式是通过href="/static/style.css" 会发现无法引用css文件（用href="/static/cm/style.css"也不行），说明并不是匹配/static/**成功后提取style.css然后在/res/目录及子目录下找该文件（不过想想也是/res/的多个子目录中可能同时有style.css）-->
+    <!--<mvc:resources mapping="/static/**" location="/res/"/>-->
+    <!-- 这个可能是idea的检测的bug不用管它 -->
+    <mvc:resources mapping="/favicon.ico" location="/favicon.ico"/>
+    <!-- 相当于把**中的内容和location以Path的形式拼接返回资源路径，假设.css文件都是在css一级子目录下那么只需一个*即可，不过为了以后的扩展还是两个*比较好 -->
+    <mvc:resources mapping="/css/**" location="/WEB-INF/res/css/"/>
+
+    <!-- 右侧提示灰色一般表示未使用，红色表示错误 -->
+    <context:component-scan base-package="silentdoer.web.controller"/>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>

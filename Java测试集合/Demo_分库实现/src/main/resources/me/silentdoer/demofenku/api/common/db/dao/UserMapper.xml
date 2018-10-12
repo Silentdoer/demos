@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.silentdoer.demofenku.api.common.db.dao.UserMapper">
+
+    <!-- 正式项目里不要直接用resultType而该用resultMap，而且TODO Mapper文件和@Insert等语句可以同时存在使用 -->
+    <select id="count" resultType="me.silentdoer.demofenku.api.common.db.model.User">
+        select fd_id ,fd_user_name
+        from tb_user
+        where 1=1
+        <if test="fdUserName != null">
+            and fd_user_name like CONCAT('%',#{fdUserName},'%')
+        </if>
+    </select>
+</mapper>

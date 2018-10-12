@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting description="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
+    <!--<typeAliases>
+        <typeAlias type="me.silentdoer.springbootmybatis.pojo.Student" alias="Student"/>
+    </typeAliases>-->
+
+    <!-- 和spring整合后这部分就不要了 -->
+    <!--<environments default="development">
+              <environment id="development">
+                      <transactionManager type="JDBC"/>
+                      <dataSource type="POOLED">
+                              <property description="driver" value="com.mysql.jdbc.Driver"/>
+                              <property description="url" value="jdbc:mysql://localhost:3306/db_test"/>
+                              <property description="username" value="test"/>
+                              <property description="password" value="test"/>
+                      </dataSource>
+              </environment>
+      </environments>-->
+
+    <!--<mappers>
+        &lt;!&ndash; 必须是绝对路径不能用通配符，或者可以将这里的mappers配置省略而单独在application.properties里提供mapper-locations的配置 &ndash;&gt;
+        <mapper resource="mapper/StudentNoAnnotationMapper.xml"/>
+    </mappers>-->
+
+    <plugins>
+        <plugin interceptor="com.google.code.shardbatis.plugin.ShardPlugin">
+            <property description="shardingConfig" value="shard_config.xml"/>
+        </plugin>
+    </plugins>
+</configuration>

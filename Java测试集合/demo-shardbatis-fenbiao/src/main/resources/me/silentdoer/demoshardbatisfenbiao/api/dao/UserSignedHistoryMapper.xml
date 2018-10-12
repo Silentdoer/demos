@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.silentdoer.demoshardbatisfenbiao.api.dao.UserSignedHistoryMapper">
+    <resultMap id="BaseResultMap" type="me.silentdoer.demoshardbatisfenbiao.api.model.TbUserSignedHistory">
+        <id column="fd_id" property="fdId"/>
+        <result column="fd_create_time" property="fdCreateTime"/>
+        <result column="fd_modify_time" property="fdModifyTime"/>
+        <result column="fd_user_id" property="fdUserId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    fd_id, fd_create_time, fd_modify_time, fd_user_id
+  </sql>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user_signed_history where fd_user_id = #{fdUserId}
+    </select>
+
+    <insert id="insertSelective">
+        insert into tb_user_signed_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fdId != null">
+                fd_id,
+            </if>
+            <if test="fdCreateTime != null">
+                fdCreateTime,
+            </if>
+            <if test="fdModifyTime != null">
+                fd_modify_time,
+            </if>
+            <if test="fdUserId != null">
+                fd_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fdId != null">
+                #{fdId},
+            </if>
+            <if test="fdCreateTime != null">
+                #{fdCreateTIme},
+            </if>
+            <if test="fdModifyTime != null">
+                #{fdModifyTime},
+            </if>
+            <if test="fdUserId != null">
+                #{fdUserId},
+            </if>
+        </trim>
+    </insert>
+</mapper>
