@@ -1,9 +1,8 @@
 package me.silentdoer.demosimpleproj.api.user.controller;
 
 import me.silentdoer.demosimpleproj.api.common.enumerate.SmsRedisEnum;
-import me.silentdoer.demosimpleproj.api.user.model.User;
-import me.silentdoer.demosimpleproj.api.user.model.req.RegisterReq;
-import me.silentdoer.demosimpleproj.api.user.model.resp.LoginResp;
+import me.silentdoer.demosimpleproj.api.user.model.RegisterDto;
+import me.silentdoer.demosimpleproj.api.user.model.LoginVo;
 import me.silentdoer.demosimpleproj.core.component.EnvironmentFacade;
 import me.silentdoer.demosimpleproj.core.component.StringRedisTemplateFacade;
 import me.silentdoer.demosimpleproj.core.support.*;
@@ -32,7 +31,7 @@ public class UserController {
     private EnvironmentFacade environmentFacade;
 
     @PostMapping("/register")
-    public ApiResult<LoginResp> register(@RequestBody @Valid RegisterReq req) {
+    public ApiResult<LoginVo> register(@RequestBody @Valid RegisterDto req) {
         String redisKey = SmsRedisEnum.REGISTER.getRedisKeyTemplate().replace("{}", req.getUsername());
         String value = stringRedisTemplateFacade.get(redisKey);
         if (StringUtils.isBlank(value)) {

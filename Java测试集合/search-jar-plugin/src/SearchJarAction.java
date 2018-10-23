@@ -11,6 +11,8 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.Messages;
 
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.util.Objects;
 
 /**
  * @author liqi.wang
@@ -21,8 +23,12 @@ public class SearchJarAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        LangDataKeys.MODULE.getData(e).
         showClassDlg();
+    }
+
+    @Override
+    public void update(AnActionEvent e) {
+        e.getPresentation().setIcon(AllIcons.Actions.Find);
     }
 
     public void showClassDlg() {
@@ -32,7 +38,7 @@ public class SearchJarAction extends AnAction {
         }
 
         if ((PersistentState.getInstance().getSearchPath() == null) || (PersistentState.getInstance().getSearchPath().trim().isEmpty())) {
-            Messages.showInfoMessage("Please set the search directory first.\n[File]->[Settings]-[Search Jar]", "Search jar path");
+            Messages.showInfoMessage("Please set the search directory first.\n[File]->[Settings]-[Search Jar]", "Search Jar Path");
             return;
         }
         searchJar(className);
@@ -56,8 +62,13 @@ public class SearchJarAction extends AnAction {
     }
         private String getCopyValue() {
             String initValue = "";
+            // TODO 获得当前粘贴缓存里的数据
             CopyPasteManager copyPasteManager = CopyPasteManager.getInstance();
-            DataFlavor[] flavors = copyPasteManager.getContents().getTransferDataFlavors();
+            Transferable contents = copyPasteManager.getContents();
+            if (Objects.isNull(contents)) {
+                return initValue;
+            }
+            DataFlavor[] flavors = contents.getTransferDataFlavors();
             for (DataFlavor flavor : flavors) {
                 if (!copyPasteManager.getContents().isDataFlavorSupported(flavor)) {
                     continue;
@@ -66,9 +77,9 @@ public class SearchJarAction extends AnAction {
                 try {
                     obj = copyPasteManager.getContents().getTransferData(flavor);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    // ignore
                 }
-                if ((obj != null) && (obj instanceof String)) {
+                if ((obj instanceof String)) {
                     initValue = obj.toString();
                 }
             }

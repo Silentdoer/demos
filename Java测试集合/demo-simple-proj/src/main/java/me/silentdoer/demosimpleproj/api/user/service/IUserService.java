@@ -1,6 +1,6 @@
 package me.silentdoer.demosimpleproj.api.user.service;
 
-import me.silentdoer.demosimpleproj.api.user.model.User;
+import me.silentdoer.demosimpleproj.api.user.model.UserPo;
 
 /**
  * @author liqi.wang
@@ -9,7 +9,7 @@ import me.silentdoer.demosimpleproj.api.user.model.User;
  */
 public interface IUserService {
 
-    User getUserById(Long id);
+    UserPo getUserById(Long id);
 
     /**
      * 检测用户名是否唯一

@@ -27,6 +27,13 @@
             <artifactId>gson</artifactId>
             <version>2.8.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.jfinal/jfinal-ext -->
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>jfinal-ext</artifactId>
+            <version>3.1.4</version>
+        </dependency>
+
     </dependencies>
     
 </project>

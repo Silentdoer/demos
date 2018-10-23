@@ -31,7 +31,8 @@
 
   <actions>
 
-    <!-- 如果不需要Group则将AnAction的提出来并删掉ActionGroup部分，然后这里配置的也一样，不过action需要添加group-id -->
+    <!-- 如果不需要Group则将AnAction的提出来并删掉ActionGroup部分，然后这里配置的也一样，不过action需要添加group-id
+     如果是MainMenu则是和上面Build、Run、Tools等同级的group-->
     <group id="MyActionGroup" text="Silentdoer Actions" popup="true" icon="/icons/favicon.gif">
       <add-to-group group-id="EditorPopupMenu" anchor="last"/>
 

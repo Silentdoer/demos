@@ -26,10 +26,11 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
+    <toolWindow id="Silentdoer Output" canCloseContents="false" anchor="bottom" icon="/favicon.gif" factoryClass="me.silentdoer.ideaplugin.MyToolWindowFactory"/>
   </extensions>
 
   <actions>
-    <group id="MyActionGroup" text="Silentdoer Actions" popup="true" icon="/favicon.gif">
+    <group id="MyActionGroup" text="_Silentdoer Actions" popup="true" icon="/favicon.gif">
       <add-to-group group-id="EditorPopupMenu" anchor="last"/>
 
       <action id="DaoFilesGenerator" class="me.silentdoer.ideaplugin.DaoGeneratorPluginAction"

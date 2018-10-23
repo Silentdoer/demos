@@ -1,7 +1,7 @@
 package me.silentdoer.demosimpleproj.api.common.controller;
 
 import me.silentdoer.demosimpleproj.api.common.enumerate.SmsRedisEnum;
-import me.silentdoer.demosimpleproj.api.user.model.User;
+import me.silentdoer.demosimpleproj.api.user.model.UserPo;
 import me.silentdoer.demosimpleproj.api.user.service.IUserService;
 import me.silentdoer.demosimpleproj.core.component.EnvironmentFacade;
 import me.silentdoer.demosimpleproj.core.component.StringRedisTemplateFacade;
@@ -42,13 +42,13 @@ public class CommonController {
                                      @RequestHeader(value = Api.APP_KEY, required = true) String appKey) {
 
         Long fUserId = Long.valueOf(JwtUtils.getTokenKey(appKey));
-        User user = userService.getUserById(fUserId);
+        UserPo userPo = userService.getUserById(fUserId);
 
         SmsRedisEnum correspondSceneEnum = SmsRedisEnum.getCorrespondSceneEnum(scene);
         if (Objects.isNull(correspondSceneEnum)) {
             throw new ApiInvalidArgException("未找到相关业务场景");
         }
-        String redisKey = correspondSceneEnum.getRedisKey(user.getFdUsername());
+        String redisKey = correspondSceneEnum.getRedisKey(userPo.getFdUsername());
         // TODO 要将发送短信的数据进行数据库的相关Log表记录
         // TODO 判断是否允许再次发送验证码（频繁发送），这里其实还应该加分布式锁，防止对方并发调用此接口
         // TODO 判断是否是debug环境

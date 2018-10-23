@@ -1,3 +1,4 @@
+import com.jfinal.ext.kit.ClassSearcher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -35,5 +37,7 @@ public class Entrance {
         // 如果是null则返回另外一个值否则返回其本身，类似三元操作符
         BigDecimal result = ObjectUtils.defaultIfNull(money, BigDecimal.ZERO);
         //CollectionUtils.addIgnoreNull()
+        //ClassSearcher.of(null).scanPackages(Collections.singletonList())
+
     }
 }

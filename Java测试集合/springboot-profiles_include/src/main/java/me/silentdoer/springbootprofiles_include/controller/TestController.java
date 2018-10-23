@@ -28,4 +28,9 @@ public class TestController {
     public String test() {
         return "AAAA" + uuu + shit + ly;
     }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello";
+    }
 }

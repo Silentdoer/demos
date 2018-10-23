@@ -1,6 +1,6 @@
 package me.silentdoer.demosimpleproj.core.component;
 
-import me.silentdoer.demosimpleproj.api.user.model.User;
+import me.silentdoer.demosimpleproj.api.user.model.UserPo;
 import me.silentdoer.demosimpleproj.api.user.service.IUserService;
 import me.silentdoer.demosimpleproj.core.support.*;
 import me.silentdoer.demosimpleproj.core.util.AppAuthAnnotationUtils;
@@ -16,7 +16,6 @@ import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Set;
@@ -61,8 +60,8 @@ public class RequiresLoginAuthHandler extends AbstractAppAuthHandler {
             return ApiResultEnum.fail(Api.APP_KEY.concat("系统参数验证失败"));
         }
         Long fdId = Long.valueOf(fIdStr);
-        User user = this.userService.getUserById(fdId);
-        if (StringUtils.isBlank(user.getFdToken())) {
+        UserPo userPo = this.userService.getUserById(fdId);
+        if (StringUtils.isBlank(userPo.getFdToken())) {
             return ApiResultEnum.fail("登录态已失效，请重新登录");
         }
         // multipart/data，此种情况下不验签
@@ -80,7 +79,7 @@ public class RequiresLoginAuthHandler extends AbstractAppAuthHandler {
             } catch (IOException e) {
                 return ApiResultEnum.fail("验签失败，请求体数据异常");
             }
-            String tmp = user.getFdToken() + queryString + body + user.getFdToken();
+            String tmp = userPo.getFdToken() + queryString + body + userPo.getFdToken();
             String signature = DigestUtils.md5DigestAsHex(tmp.getBytes(StandardCharsets.UTF_8));
             if (Objects.equals(authorization, signature)) {
                 return ApiResultEnum.ok();
