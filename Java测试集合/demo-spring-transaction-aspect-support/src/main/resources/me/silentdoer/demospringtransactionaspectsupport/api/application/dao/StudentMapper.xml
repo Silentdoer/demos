@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.silentdoer.demospringtransactionaspectsupport.api.application.dao.StudentMapper">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="me.silentdoer.demospringtransactionaspectsupport.api.application.model.po.Student">
+        <result column="fd_id" property="fdId" jdbcType="BIGINT"/>
+        <result column="fd_name" property="fdName" jdbcType="VARCHAR"/>
+        <result column="fd_gender" property="fdGender" jdbcType="INTEGER"/>
+        <result column="fd_class_id" property="fdClassId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        fd_id,
+        fd_name,
+        fd_gender,
+        fd_class_id
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="student.fdId">
+        INSERT INTO tb_student (
+            fd_id,
+            fd_name,
+            fd_gender,
+            fd_class_id
+        ) VALUES (
+            #{student.fdId,jdbcType=BIGINT},
+            #{student.fdName,jdbcType=VARCHAR},
+            #{student.fdGender,jdbcType=INTEGER},
+            #{student.fdClassId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="student.fdId">
+        INSERT INTO tb_student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="student.fdId!=null"> fd_id,</if>
+            <if test="student.fdName!=null"> fd_name,</if>
+            <if test="student.fdGender!=null"> fd_gender,</if>
+            <if test="student.fdClassId!=null"> fd_class_id,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="student.fdId!=null">#{student.fdId,jdbcType=BIGINT},
+            </if>
+            <if test="student.fdName!=null">#{student.fdName,jdbcType=VARCHAR},
+            </if>
+            <if test="student.fdGender!=null">#{student.fdGender,jdbcType=INTEGER},
+            </if>
+            <if test="student.fdClassId!=null">#{student.fdClassId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO tb_student (
+        <include refid="Base_Column_List"/>
+        )VALUES
+        <foreach collection="students" item="student" index="index" separator=",">
+            (
+            #{student.fdId,jdbcType=BIGINT},
+            #{student.fdName,jdbcType=VARCHAR},
+            #{student.fdGender,jdbcType=INTEGER},
+            #{student.fdClassId,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE tb_student
+        <set>
+            <if test="student.fdId != null"> fd_id= #{student.fdId,jdbcType=BIGINT},</if>
+            <if test="student.fdName != null"> fd_name= #{student.fdName,jdbcType=VARCHAR},</if>
+            <if test="student.fdGender != null"> fd_gender= #{student.fdGender,jdbcType=INTEGER},</if>
+            <if test="student.fdClassId != null"> fd_class_id= #{student.fdClassId,jdbcType=VARCHAR}</if>
+        </set>
+        WHERE fd_id = #{student.fdId,jdbcType=BIGINT}
+    </update>
+</mapper>
+

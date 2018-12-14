@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 注意，这个namespace是对应dao里的XXMapper，之前有一个demo里写错了写成了pojo里的实体类的绝对路径 -->
+<mapper namespace="me.silentdoer.springbootmybatis.dao.StudentNoAnnotationMapper">
+    <!-- Student已经通过mybatis-config.xml的配置添加为了xx.pojo.Student类的别名 -->
+    <resultMap id="studentResultMap" type="Student">
+        <id property="uid" column="uid"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+    </resultMap>
+
+    <!--<insert id="insertOne">
+        insert into student(name values (#{name})
+    </insert>-->
+
+    <select id="selectStudentByPrimaryKey" resultMap="studentResultMap">
+        select uid, name, gender from student where uid=#{uid}
+    </select>
+</mapper>

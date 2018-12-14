@@ -38,6 +38,7 @@
 
       <action id="FirstCustomAction" class="me.silentdoer.myplugin.FirstCustomAction"
               text="GenerateMybatisFiles" description="分组栏的第一个实际按钮">
+        <keyboard-shortcut first-keystroke="ctrl alt U" keymap="$default"/>
       </action>
     </group>
 

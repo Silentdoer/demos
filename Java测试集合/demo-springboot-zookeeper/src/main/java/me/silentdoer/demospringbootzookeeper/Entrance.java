@@ -1,5 +1,7 @@
 package me.silentdoer.demospringbootzookeeper;
 
+import org.springframework.core.Ordered;
+
 /**
  * @author liqi.wang
  * @version 1.0.0

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--<settings>
+        &lt;!&ndash; 打印查询语句 &ndash;&gt;
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>-->
+
+    <plugins>
+        <plugin interceptor="me.silentdoer.mybatisinterceptorusage.support.mybatis.interceptor.PaginateSqlInterceptor">
+            <!-- 注意这个设置的property所有都会作为key-value存储到Interceptor的setProperties(Properties properties)的properties里 -->
+            <property name="dialect" value="mysql" />
+            <property name="enable" value="true"/>
+        </plugin>
+
+        <!--<plugin interceptor="me.silentdoer.mybatisinterceptorusage.support.mybatis.interceptor.SqlPrintInterceptor2"/>-->
+    </plugins>
+</configuration>

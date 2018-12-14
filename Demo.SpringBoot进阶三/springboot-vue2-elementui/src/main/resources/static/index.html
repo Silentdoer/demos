@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ZH">
+<head>
+    <meta urlDecodeCharset="UTF-8">
+    <title>spring boot + mybatis + vue + elementui</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/element-ui/1.1.2/theme-default/index.css">
+    <script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
+    <script src="//cdn.bootcss.com/element-ui/1.1.2/index.js"></script>
+    <!-- TODO 用于Vue对象里可以使用如this.$http.get之类的方法，也可以用jQuery替换 -->
+    <script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+</head>
+<style>
+    .el-select .el-input {
+        width: 110px;
+    }
+
+    .el-table .info-row {
+        background: #c9e5f5;
+    }
+
+    #top {
+        background:#20A0FF;
+        padding:5px;
+        overflow:hidden
+    }
+</style>
+<body>
+<div id="vm">
+    <!-- 注意，这里@xx后面的必须是能够找的到，否则下面的将不会解析，TODO 不要追求统一，就该和标准的html及css混合着写 -->
+    <div id="top">
+            <span style="float:right;">
+                <el-button type="text" v-on:click="changeUsername" style="color:white">添加</el-button>
+                <el-button type="text" @click="changeUsername" style="color:white">批量删除</el-button>
+            </span>
+    </div>
+
+    <el-row>
+        <el-button>默认按钮</el-button>
+        <el-button type="primary">主要按钮</el-button>
+        <el-button type="success">成功按钮</el-button>
+        <el-button type="info">信息按钮</el-button>
+        <el-button type="warning">警告按钮</el-button>
+        <el-button type="danger">危险按钮</el-button>
+    </el-row>
+
+    <el-row :gutter="3" style="margin: 10px 0;">
+        <!-- v-model/@change都是vue2中自动会检测的，icon属性是Element-ui的，TODO 注意@change是 实时 触发的
+         TODO v-model使得username的值和vm的username绑定，即查询名称改变就会导致vm的username的属性改变，注意这里changeUsername方法没有缓存结果，因此改变用户名都会导致访问服务器 -->
+        <el-input placeholder="输入用户名称查询" v-model="username" @change="changeUsername">
+            <!-- prepend表示添加到input前面 -->
+            <el-select slot="prepend" placeholder="请选择">
+                <el-option label="id" value="1"></el-option>
+                <el-option label="name" value="2"></el-option>
+            </el-select>
+            <el-button slot="append" icon="search" v-on:click="changeUsername"></el-button>
+        </el-input>
+    </el-row>
+
+    <!-- TODO fit安装 -->
+    <el-table border fit :data="tableData" highlight-current-row style="width: 100%;font-size: 12px;">
+        <!-- type类似html中的type，如type="button" -->
+        <!-- 经过测试不能简略</..部分 -->
+        <el-table-column type="index" width="50"></el-table-column>
+        <el-table-column prop="userId" label="用户ID"></el-table-column>
+        <!-- prop就是类似html中input的name -->
+        <el-table-column prop="username" label="用户名称"></el-table-column>
+        <!-- :formatter来自 Vue对象的formatSex成员方法，调用时会传row和column两个参数？，用就是row.sex，因此row其实就是一个User对象 -->
+        <el-table-column prop="sex" label="性别" :formatter="formatSex"></el-table-column>
+        <!-- Date的字符串是能够自动被转换为js中的Date对象的 -->
+        <el-table-column prop="createTime" label="创建时间" :formatter="formatCreateDate"></el-table-column>
+    </el-table>
+
+    <!-- :total="total"的后面的total就是Vue对象的total属性，属性值是这样设置，而text值则是通过{{total}}来设置
+     TODO 注意，:xx的格式表示它的值如currentPage是一个Vue对象的成员，如果没有找到这个成员那么-->
+    <!-- TODO 注意，这里的pageSize只是用来渲染该怎么显示 toolbar的（多少个页按钮），根真正每页是多少无关，比如total是5，而page-size是1那么就有5个页按钮，但是每页真正显示多少由获取的
+     TODO 真实数据决定，@current-change表示toolbar的当前页发生改变时（包括按pre/next/jumper等按钮）调用vm的findAll方法-->
+    <!-- layout的total会显示：共n条，prev则会有<箭头的按钮pager会有1|2|3...之类的页按钮，next有>按钮，jumper有：前往[]页按钮 -->
+    <!-- 经过测试currentPage不能改为$currentPage或${currentPage} -->
+    <el-col class="toolbar" style="padding:10px;">
+        <el-pagination @current-change="findAll" :current-page="currentPage" :page-size="pageSize"
+                       layout="total, prev, pager, next, jumper" :total="total" style="float:right"></el-pagination>
+    </el-col>
+</div>
+</body>
+
+<script>
+    Vue.http.options.emulateJSON = true;
+    Vue.http.options.emulateHTTP = true;
+    // TODO 这个el就是vue的，但是上面的el-row之类的是Element-UI的
+    var vm = new Vue({
+        el: '#vm',
+        // TODO 注意，这个data本身就是个JSON对象，在id=vm中用的时候可以直接{{currentPage}}来引用data的属性
+        // TODO 注意，data中所有的属性都会成为vm对象的属性，data可以类似的理解为prototype
+        // TODO el和data和methods都是初始化完成的，因此没有执行methods中的方法之前默认就是共10条（截图里也确实这样），但是执行了methods中的方法后就不一定了；（先组建构造，之后才是执行初始化）
+        data: {tableData: [], currentPage: 1, pageSize:8, total: 10, listLoading: false, username: null},
+        // mounted 是启动时会执行的方法，如果没有那么不会执行
+        mounted: function () {
+            this.findAll();
+        },
+        methods: {
+            findAll: function (currentPage) {
+                this.listLoading = true;
+                // TODO 可以忽略window，这样如果是用在nodejs里这个写法也通用
+                if (!isNaN(currentPage)) {
+                    this.currentPage = currentPage;
+                }
+                <!-- TODO 执行实例方法后对成员重新赋值 -->
+                var params_ = {pageNum: this.currentPage, pageSize: this.pageSize};
+                // TODO 如果查询名称是Blank那么http请求的参数里不填username
+                if (this.username && this.username.trim() !== "") {
+                    params_['username'] = this.username;
+                }
+                <!-- TODO 请求后台的地方，参数包括：int pageNum, int pageSize, String username -->
+                this.$http.get("/getTableData", {params: params_}).then(function (response) {
+                    console.log(response.data);
+                    // TODO 服务端返回的JSON字符串大致：{"list":[..],"count":5}
+                    this.total = response.data.count;
+                    this.tableData = [];
+                    for (var key in response.data.list) {
+                        // TODO 这个key应该是下标，所以tableData元素的类型实际上就是User类
+                        this.$set(this.tableData, key, response.data.list[key]);
+                    }
+                }).catch(function (err) {
+                    console.error(err);
+                });
+                this.listLoading = false;
+            },
+            formatDate: function getNowFormatDate(time) {
+                var date = new Date(time);
+                var seperator1 = "-";
+                var seperator2 = ":";
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+                return currentdate;
+            },
+            formatCreateDate: function (row, column) {
+                if (row.createTime != null) {
+                    return this.formatDate(row.createTime);
+                } else {
+                    return '';
+                }
+            },
+            formatSex: function (row, column) {
+                if (row.sex != null) {
+                    return row.sex == 1 ? '男' : '女';
+                }
+            },
+            changeUsername: function () {
+                this.findAll(1);
+            }
+        }
+    });
+</script>
+</html>

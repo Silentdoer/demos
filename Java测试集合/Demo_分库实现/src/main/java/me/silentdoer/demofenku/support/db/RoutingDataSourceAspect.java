@@ -32,7 +32,7 @@ public class RoutingDataSourceAspect {
     private List<String> readMethodPattern = new ArrayList<>(8);
 
     {
-        readMethodPattern.addAll(Arrays.asList("select", "get", "count", "find", "query"));
+        readMethodPattern.addAll(Arrays.asList("select", "get", "count", "find", "query", "list"));
     }
 
     @Pointcut(value = "execution(* me.silentdoer.demofenku..*.dao.*Mapper.*(..))")
@@ -63,7 +63,7 @@ public class RoutingDataSourceAspect {
                 DataSourceTypeHolder.setRead();
             } else if(m != null && m.isAnnotationPresent(WriteDataSource.class)) {
                 DataSourceTypeHolder.setWrite();
-            } else if(this.readMethodPattern.stream().anyMatch(methodName::contains)) {
+            } else if(this.readMethodPattern.stream().anyMatch(methodName::startsWith)) {
                 DataSourceTypeHolder.setRead();
             } else {
                 DataSourceTypeHolder.setWrite();

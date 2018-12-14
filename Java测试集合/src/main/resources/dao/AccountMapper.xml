@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.silentdoer.api.user.dao.AccountMapper">
+  <resultMap id="BaseResultMap" type="me.silentdoer.api.user.model.Account">
+    <id column="f_id" jdbcType="BIGINT" property="fId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    f_id, create_time, gender, modify_time, `name`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_account
+    where f_id = #{fId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_account
+    where f_id = #{fId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="f_id" keyProperty="fId" parameterType="me.silentdoer.api.user.model.Account" useGeneratedKeys="true">
+    insert into tb_account (create_time, gender, modify_time, 
+      `name`)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{gender,jdbcType=CHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="fId" parameterType="me.silentdoer.api.user.model.Account" useGeneratedKeys="true">
+    insert into tb_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.silentdoer.api.user.model.Account">
+    update tb_account
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where f_id = #{fId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.silentdoer.api.user.model.Account">
+    update tb_account
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      gender = #{gender,jdbcType=CHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      `name` = #{name,jdbcType=VARCHAR}
+    where f_id = #{fId,jdbcType=BIGINT}
+  </update>
+</mapper>

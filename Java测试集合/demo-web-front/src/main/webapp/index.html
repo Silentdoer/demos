@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script>
+        let fooFunc = (arg) => {
+            // 可以工作，发现jQuery还是很好用的
+            alert($(arg).val().concat($(arg).text()));
+        }
+    </script>
+</head>
+<body>
+<button onclick="fooFunc(this)" value="88">Hello</button>
+</body>
+</html>

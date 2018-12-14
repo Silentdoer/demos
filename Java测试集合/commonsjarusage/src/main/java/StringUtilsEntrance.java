@@ -1,4 +1,5 @@
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * @author liqi.wang
@@ -14,5 +15,6 @@ public class StringUtilsEntrance {
         System.out.println(str);
         // FFa（因此其实不符合IDEA的生成setfFa()）
         System.out.println(ff);
+        StringUtils.defaultIfEmpty("sss", "uuu");
     }
 }
