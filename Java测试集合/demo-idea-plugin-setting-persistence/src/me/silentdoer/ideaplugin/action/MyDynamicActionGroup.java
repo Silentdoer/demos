@@ -3,6 +3,7 @@ package me.silentdoer.ideaplugin.action;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.psi.PsiClass;
 import me.silentdoer.ideaplugin.persistent.PersistentState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -88,6 +88,7 @@ public class FirstCustomAction extends AnAction {
         // 重要，居然还能对源文件作为一个类来操作，获得如父类、子类等信息
         // TODO 这个真的叼爆了，不但可以获取.java文件的成员，而且还能获取它父类的成员（protected），这样自己写的工具其实派不上用场了
         PsiClass aClass = JavaPsiFacade.getInstance(project).findClass("me.silentdoer.tc.Foo", GlobalSearchScope.projectScope(project));
+        //Arrays.stream(aClass.getMethods()).filter(m -> m.getParent() != null).map(m -> m.getTextOffset());
 
         //Messages.showMessageDialog(String.format("%s", Arrays.stream(aClass.getAllFields()).map(r -> r.getName()).collect(Collectors.joining(","))), "提示", AllIcons.Actions.Find);
 

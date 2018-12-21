@@ -19,9 +19,11 @@ public enum ApiResultEnum {
 
     NORMAL(10000, "正常"),
 
-    FAILURE(20000, "通用失败"),
+    PUSH_TASK(11000, "提交任务成功"),
 
-    FAILURE_TIP(21000, "通用失败需要弹框");
+    FAILURE(30000, "通用失败"),
+
+    FAILURE_TIP(31000, "通用失败需要弹框");
 
     private int code;
 
