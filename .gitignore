@@ -10,7 +10,7 @@ spring-*/src/main/java/META-INF/MANIFEST.MF
 *.iml
 *.ipr
 *.iws
-.idea
+
 out
 target
 test-output

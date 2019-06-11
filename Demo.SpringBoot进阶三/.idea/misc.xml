@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="Kotlin2JsCompilerArguments">
+    <option name="sourceMapEmbedSources" />
+    <option name="sourceMapPrefix" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/usagefuturefuturetasketc/pom.xml" />
+        <option value="$PROJECT_DIR$/urlcodertesttomcatspringboot/pom.xml" />
+        <option value="$PROJECT_DIR$/test-thread-pool/pom.xml" />
+        <option value="$PROJECT_DIR$/test-System-out-println/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-websocket/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-webfilter2/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-vue2-elementui/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-valid-annotation/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-transaction-test/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-shiro/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-sessionid-generate-strategy/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-session/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-servletinputstream-test/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-security/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-schedule/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-retry/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-redis/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-re-readable-inputstream/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-rabbitmq/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-quartz/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-properties-value/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-profile-annotation/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-pagehelper-druid/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-no-web/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-mybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-multipart/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-mongodb/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-mapping-annotation-usage/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-mail/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-jpa/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-jdbc/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-import-importresource/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-https-test/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-header-ignore-case-test/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-forward-to-html/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-filter/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-environment/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-custom-validator/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-controller-advice/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-configuration-processor/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-cacheable-to-mapper/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-cache/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-beanname-generator-strategy/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-at-value-space-test/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-async/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-aop/pom.xml" />
+        <option value="$PROJECT_DIR$/nio-chat-app/pom.xml" />
+        <option value="$PROJECT_DIR$/mybatis-two-composite-arg/pom.xml" />
+        <option value="$PROJECT_DIR$/mybatis-interceptor-usage/pom.xml" />
+        <option value="$PROJECT_DIR$/java-lock-principle/pom.xml" />
+        <option value="$PROJECT_DIR$/htmlunitcrawler/pom.xml" />
+        <option value="$PROJECT_DIR$/guavautilusage/pom.xml" />
+        <option value="$PROJECT_DIR$/gsonusage/pom.xml" />
+        <option value="$PROJECT_DIR$/exceltest/pom.xml" />
+        <option value="$PROJECT_DIR$/demo-interceptor-principle/pom.xml" />
+        <option value="$PROJECT_DIR$/commonsjarusage/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="Simon">
+      <words>
+        <w>alibaba</w>
+      </words>
+    </dictionary>
+    <dictionary name="liqi.wang">
+      <words>
+        <w>freemaker</w>
+        <w>silentdoer</w>
+      </words>
+    </dictionary>
+  </component>
+  <component name="TerminalProjectOptionsProvider">
+    <option name="myStartingDirectory" value="E:\Documents\IDEAProjs" />
+  </component>
+</project>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Demo-测试synchronized锁的是对象还是引用变量/Demo-测试synchronized锁的是对象还是引用变量.iml" filepath="$PROJECT_DIR$/Demo-测试synchronized锁的是对象还是引用变量/Demo-测试synchronized锁的是对象还是引用变量.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestKotlin2Java/TestKotlin2Java.iml" filepath="$PROJECT_DIR$/TestKotlin2Java/TestKotlin2Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/commonsjarusage/commons-jar-usage.iml" filepath="$PROJECT_DIR$/commonsjarusage/commons-jar-usage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo-interceptor-principle/demo-interceptor-principle.iml" filepath="$PROJECT_DIR$/demo-interceptor-principle/demo-interceptor-principle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exceltest/excel-test.iml" filepath="$PROJECT_DIR$/exceltest/excel-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gsonusage/gson-usage.iml" filepath="$PROJECT_DIR$/gsonusage/gson-usage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/guavautilusage/guava-util-usage.iml" filepath="$PROJECT_DIR$/guavautilusage/guava-util-usage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htmlunitcrawler/htmlunit-crawler.iml" filepath="$PROJECT_DIR$/htmlunitcrawler/htmlunit-crawler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-lock-principle/java-lock-principle.iml" filepath="$PROJECT_DIR$/java-lock-principle/java-lock-principle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-interceptor-usage/mybatis-interceptor-usage.iml" filepath="$PROJECT_DIR$/mybatis-interceptor-usage/mybatis-interceptor-usage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis-two-composite-arg/mybatis-two-composite-arg.iml" filepath="$PROJECT_DIR$/mybatis-two-composite-arg/mybatis-two-composite-arg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nio-chat-app/nio-chat-app.iml" filepath="$PROJECT_DIR$/nio-chat-app/nio-chat-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-aop/springboot-aop.iml" filepath="$PROJECT_DIR$/springboot-aop/springboot-aop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-async/springboot-async.iml" filepath="$PROJECT_DIR$/springboot-async/springboot-async.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-at-value-space-test/springboot-at-value-space-test.iml" filepath="$PROJECT_DIR$/springboot-at-value-space-test/springboot-at-value-space-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-beanname-generator-strategy/springboot-beanname-generator-strategy.iml" filepath="$PROJECT_DIR$/springboot-beanname-generator-strategy/springboot-beanname-generator-strategy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-cache/springboot-cache.iml" filepath="$PROJECT_DIR$/springboot-cache/springboot-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-cacheable-to-mapper/springboot-cacheable-to-mapper.iml" filepath="$PROJECT_DIR$/springboot-cacheable-to-mapper/springboot-cacheable-to-mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-configuration-processor/springboot-configuration-processor.iml" filepath="$PROJECT_DIR$/springboot-configuration-processor/springboot-configuration-processor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-controller-advice/springboot-controller-advice.iml" filepath="$PROJECT_DIR$/springboot-controller-advice/springboot-controller-advice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-custom-validator/springboot-custom-validator.iml" filepath="$PROJECT_DIR$/springboot-custom-validator/springboot-custom-validator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-environment/springboot-environment.iml" filepath="$PROJECT_DIR$/springboot-environment/springboot-environment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-filter/springboot-filter.iml" filepath="$PROJECT_DIR$/springboot-filter/springboot-filter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-forward-to-html/springboot-forward-to-html.iml" filepath="$PROJECT_DIR$/springboot-forward-to-html/springboot-forward-to-html.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-header-ignore-case-test/springboot-header-ignore-case-test.iml" filepath="$PROJECT_DIR$/springboot-header-ignore-case-test/springboot-header-ignore-case-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-https-test/springboot-https-test.iml" filepath="$PROJECT_DIR$/springboot-https-test/springboot-https-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-import-importresource/springboot-import-importresource.iml" filepath="$PROJECT_DIR$/springboot-import-importresource/springboot-import-importresource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-jdbc/springboot-jdbc.iml" filepath="$PROJECT_DIR$/springboot-jdbc/springboot-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-jpa/springboot-jpa.iml" filepath="$PROJECT_DIR$/springboot-jpa/springboot-jpa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-mail/springboot-mail.iml" filepath="$PROJECT_DIR$/springboot-mail/springboot-mail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-mapping-annotation-usage/springboot-mapping-annotation-usage.iml" filepath="$PROJECT_DIR$/springboot-mapping-annotation-usage/springboot-mapping-annotation-usage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-mongodb/springboot-mongodb.iml" filepath="$PROJECT_DIR$/springboot-mongodb/springboot-mongodb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-multipart/springboot-multipart.iml" filepath="$PROJECT_DIR$/springboot-multipart/springboot-multipart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-mybatis/springboot-mybatis.iml" filepath="$PROJECT_DIR$/springboot-mybatis/springboot-mybatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-no-web/springboot-no-web.iml" filepath="$PROJECT_DIR$/springboot-no-web/springboot-no-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-pagehelper-druid/springboot-pagehelper-druid.iml" filepath="$PROJECT_DIR$/springboot-pagehelper-druid/springboot-pagehelper-druid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-profile-annotation/springboot-profile-annotation.iml" filepath="$PROJECT_DIR$/springboot-profile-annotation/springboot-profile-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-properties-value/springboot-properties-value.iml" filepath="$PROJECT_DIR$/springboot-properties-value/springboot-properties-value.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-quartz/springboot-quartz.iml" filepath="$PROJECT_DIR$/springboot-quartz/springboot-quartz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-rabbitmq/springboot-rabbitmq.iml" filepath="$PROJECT_DIR$/springboot-rabbitmq/springboot-rabbitmq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-re-readable-inputstream/springboot-re-readable-inputstream.iml" filepath="$PROJECT_DIR$/springboot-re-readable-inputstream/springboot-re-readable-inputstream.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-redis/springboot-redis.iml" filepath="$PROJECT_DIR$/springboot-redis/springboot-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-retry/springboot-retry.iml" filepath="$PROJECT_DIR$/springboot-retry/springboot-retry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-schedule/springboot-schedule.iml" filepath="$PROJECT_DIR$/springboot-schedule/springboot-schedule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-security/springboot-security.iml" filepath="$PROJECT_DIR$/springboot-security/springboot-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-servletinputstream-test/springboot-servletinputstream-test.iml" filepath="$PROJECT_DIR$/springboot-servletinputstream-test/springboot-servletinputstream-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-session/springboot-session.iml" filepath="$PROJECT_DIR$/springboot-session/springboot-session.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-sessionid-generate-strategy/springboot-sessionid-generate-strategy.iml" filepath="$PROJECT_DIR$/springboot-sessionid-generate-strategy/springboot-sessionid-generate-strategy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-shiro/springboot-shiro.iml" filepath="$PROJECT_DIR$/springboot-shiro/springboot-shiro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-transaction-test/springboot-transaction-test.iml" filepath="$PROJECT_DIR$/springboot-transaction-test/springboot-transaction-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-valid-annotation/springboot-valid-annotation.iml" filepath="$PROJECT_DIR$/springboot-valid-annotation/springboot-valid-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-vue2-elementui/springboot-vue2-elementui.iml" filepath="$PROJECT_DIR$/springboot-vue2-elementui/springboot-vue2-elementui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-webfilter2/springboot-webfilter2.iml" filepath="$PROJECT_DIR$/springboot-webfilter2/springboot-webfilter2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-websocket/springboot-websocket.iml" filepath="$PROJECT_DIR$/springboot-websocket/springboot-websocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-System-out-println/test-System-out-println.iml" filepath="$PROJECT_DIR$/test-System-out-println/test-System-out-println.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-thread-pool/test-thread-pool.iml" filepath="$PROJECT_DIR$/test-thread-pool/test-thread-pool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/urlcodertesttomcatspringboot/urlcoder-test-tomcat-springboot.iml" filepath="$PROJECT_DIR$/urlcodertesttomcatspringboot/urlcoder-test-tomcat-springboot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/usagefuturefuturetasketc/usage-future-futuretask-etc.iml" filepath="$PROJECT_DIR$/usagefuturefuturetasketc/usage-future-futuretask-etc.iml" />
+    </modules>
+  </component>
+</project>
