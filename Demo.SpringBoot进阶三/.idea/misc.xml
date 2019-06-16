@@ -3,10 +3,6 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
-  <component name="Kotlin2JsCompilerArguments">
-    <option name="sourceMapEmbedSources" />
-    <option name="sourceMapPrefix" />
-  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -72,19 +68,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectDictionaryState">
-    <dictionary name="Simon">
-      <words>
-        <w>alibaba</w>
-      </words>
-    </dictionary>
-    <dictionary name="liqi.wang">
-      <words>
-        <w>freemaker</w>
-        <w>silentdoer</w>
-      </words>
-    </dictionary>
-  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
   <component name="TerminalProjectOptionsProvider">
     <option name="myStartingDirectory" value="E:\Documents\IDEAProjs" />
   </component>

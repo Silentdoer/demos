@@ -76,44 +76,44 @@
       <module name="mybatis-two-composite-arg" target="1.5" />
       <module name="nio-chat-app" target="1.8" />
       <module name="springboot-aop" target="1.5" />
-      <module name="springboot-async" target="1.5" />
+      <module name="springboot-async" target="1.8" />
       <module name="springboot-at-value-space-test" target="1.5" />
       <module name="springboot-beanname-generator-strategy" target="1.5" />
-      <module name="springboot-cache" target="1.5" />
+      <module name="springboot-cache" target="1.8" />
       <module name="springboot-cacheable-to-mapper" target="1.5" />
       <module name="springboot-configuration-processor" target="1.5" />
-      <module name="springboot-controller-advice" target="1.5" />
+      <module name="springboot-controller-advice" target="1.8" />
       <module name="springboot-custom-validator" target="1.5" />
       <module name="springboot-environment" target="1.5" />
-      <module name="springboot-filter" target="1.5" />
+      <module name="springboot-filter" target="1.8" />
       <module name="springboot-forward-to-html" target="1.5" />
       <module name="springboot-header-ignore-case-test" target="1.5" />
-      <module name="springboot-https-test" target="1.5" />
-      <module name="springboot-import-importresource" target="1.5" />
+      <module name="springboot-https-test" target="1.8" />
+      <module name="springboot-import-importresource" target="1.8" />
       <module name="springboot-jdbc" target="1.5" />
-      <module name="springboot-jpa" target="1.5" />
+      <module name="springboot-jpa" target="1.8" />
       <module name="springboot-mail" target="1.5" />
       <module name="springboot-mapping-annotation-usage" target="1.5" />
       <module name="springboot-mongodb" target="1.5" />
       <module name="springboot-multipart" target="1.5" />
-      <module name="springboot-mybatis" target="1.5" />
+      <module name="springboot-mybatis" target="1.8" />
       <module name="springboot-no-web" target="1.5" />
       <module name="springboot-pagehelper-druid" target="1.5" />
       <module name="springboot-profile-annotation" target="1.5" />
-      <module name="springboot-properties-value" target="1.5" />
+      <module name="springboot-properties-value" target="1.8" />
       <module name="springboot-quartz" target="1.5" />
       <module name="springboot-rabbitmq" target="1.5" />
       <module name="springboot-re-readable-inputstream" target="1.5" />
-      <module name="springboot-redis" target="1.5" />
+      <module name="springboot-redis" target="1.8" />
       <module name="springboot-retry" target="1.5" />
-      <module name="springboot-schedule" target="1.5" />
+      <module name="springboot-schedule" target="1.8" />
       <module name="springboot-security" target="1.5" />
       <module name="springboot-servletinputstream-test" target="1.5" />
-      <module name="springboot-session" target="1.5" />
+      <module name="springboot-session" target="1.8" />
       <module name="springboot-sessionid-generate-strategy" target="1.5" />
       <module name="springboot-shiro" target="1.5" />
       <module name="springboot-transaction-test" target="1.5" />
-      <module name="springboot-valid-annotation" target="1.5" />
+      <module name="springboot-valid-annotation" target="1.8" />
       <module name="springboot-vue2-elementui" target="1.5" />
       <module name="springboot-webfilter2" target="1.5" />
       <module name="springboot-websocket" target="1.5" />
@@ -126,6 +126,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-parameters" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="commons-jar-usage" options="" />
       <module name="excel-test" options="" />
       <module name="gson-usage" options="" />
       <module name="guava-util-usage" options="" />
