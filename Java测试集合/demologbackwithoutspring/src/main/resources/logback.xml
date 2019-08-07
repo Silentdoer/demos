@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 配置文件名称为logback.xml的话在使用logback时是不需要指定配置文件路径的，能够被自动扫描(最好放resources目录） -->
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+
+	<!-- user.dir是项目的根目录，如果是web应用可以用catalina.base -->
+	<property name="log_dir" value="${user.dir}/logs" />
+	<property name="CONSOLE_LOG_PATTERN" value="[Level:%-5level] %d{yyyy-MM-dd#HH:mm:ss.SSS} [Thread:%thread] [Logger:%logger] -> %msg%n" />
+
+	<!-- 控制台输出的Appender，没有配置filter则处理所有来自Logger的日志事件（但是日志事件会先由Logger过滤） -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- 日志输出格式，%level，%d，%thread，%logger，%msg，%n -->
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- DEBUG级别日志 appender -->
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 正在记录的日志文件的路径及文件名 -->
+		<file>${log_dir}/log.log</file>
+		<!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 归档的日志文件的路径 -->
+			<fileNamePattern>${log_dir}/history/%d{yyyy-MM-dd-HH}.gz</fileNamePattern>
+		</rollingPolicy>
+		<!-- 追加方式记录日志 -->
+		<append>true</append>
+		<!-- layout和encoder都可以，但是layout是过时的不要用 -->
+		<encoder>
+			<!-- 日志输出格式 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] |-%-5level |-%logger -> %msg%n</pattern>
+			<charset>utf-8</charset>
+		</encoder>
+		<!-- 过滤掉低于指定临界值的事件 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<!-- 日志级别包括：TRACE、DEBUG、INFO、WARN和ERROR，默认情况下级别是DEBUG（不区分大小写） -->
+	<root level="DEBUG">
+		<appender-ref ref="fileAppender"/>
+		<appender-ref ref="console" />
+	</root>
+
+</configuration>
