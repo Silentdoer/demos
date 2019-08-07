@@ -1,7 +1,5 @@
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.framework.api.transaction.CuratorTransaction;
-import org.apache.curator.framework.api.transaction.CuratorTransactionResult;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
@@ -13,9 +11,9 @@ import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.Stat;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * @author liqi.wang
@@ -87,12 +85,12 @@ public class Entrance {
 			// 注意，如果后面没有接forPath是不会执行任何操作的，也不会报错
 			// TODO 注意，这里所有的create返回的都是String，对于创建节点的zk中的绝对路径
 			// TODO EPHEMERAL短暂的节点和持久的节点不同的点在于Node Metadata里的ephemeral owner的值大于0，持久节点的该值是0
-			client.create().withMode(CreateMode.EPHEMERAL).withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE).forPath("/mswt8");
+			//client.create().withMode(CreateMode.EPHEMERAL).withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE).forPath("/mswt8");
 			// EPHEMERAL是临时节点，程序一关闭该节点就可能立刻被清除，所以这里read()一下；
 			//System.in.read();
 
 			// 创建自动加排序号后缀的子节点（即uust0000000000/uust0000000001这样的节点，指定的叶子节点名会加上十位十进制数值）
-			client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE).forPath("/kkks/uust");
+			//client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE).forPath("/kkks/uust");
 			//System.in.read();
 
 			// 这里得到的只是一级children，不会递归获取所有的子孙节点
@@ -105,12 +103,19 @@ public class Entrance {
 			// PathChildrenCache监听数据节点的增删改，nginxplus只需监听增删即可
 			// TODO 这些是在Recipes包里的，curator-framework包里没有
 			final PathChildrenCache childrenCache = new PathChildrenCache(client, "/test/uuu", true);
-			// TODO NORMAL:异步初始化但不产生INITIALIZED事件, BUILD_INITIAL_CACHE:同步初始化, POST_INITIALIZED_EVENT:异步初始化且初始化之后会触发事件
-			childrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
+			// TODO NORMAL:异步初始化但不产生INITIALIZED事件（但产生了添加子节点的事件【但这些子节点是监听前已经存在了】）
+			//  TODO , BUILD_INITIAL_CACHE:同步初始化（不产生初始化事件和监听前的节点的的添加事件）
+			//   TODO , POST_INITIALIZED_EVENT:异步初始化且初始化之后会触发初始化事件和监听前已经存在子节点的添加事件
+			childrenCache.start(PathChildrenCache.StartMode.BUILD_INITIAL_CACHE);
 			// 这名字有点坑爹，用getCurrentChildrenData不是更好吗？，它的操作本质上还是通过之前的client实现的；
 			List<ChildData> childDataList = childrenCache.getCurrentData(); // 当前数据节点的子节点数据列表
 			childrenCache.getListenable().addListener(new PathChildrenCacheListener() {
 
+				/*
+				修改子节点, path:/test/uuu/eees, data:kkk
+				添加子节点, path:/test/uuu/eskut, data:
+				删除子节点, path:/test/uuu/ssmk, data:ss
+				 */
 				@Override
 				public void childEvent(CuratorFramework client, PathChildrenCacheEvent event) throws Exception {
 					if (event.getType().equals(PathChildrenCacheEvent.Type.INITIALIZED)) {
@@ -121,13 +126,15 @@ public class Entrance {
 						// event.getData()获取的不是value值而是Node的一个数据封装对象
 						System.out.printf("添加子节点, path:%s, data:%s\n", event.getData().getPath(), new String(event.getData().getData(), StandardCharsets.UTF_8));
 					} else if (event.getType().equals(PathChildrenCacheEvent.Type.CHILD_REMOVED)) {
-						System.out.printf("删除子节点, path:%s\n", new String(event.getData().getData(), StandardCharsets.UTF_8));
+						System.out.printf("删除子节点, path:%s, data:%s\n", event.getData().getPath(), new String(event.getData().getData(), StandardCharsets.UTF_8));
 					} else if (event.getType().equals(PathChildrenCacheEvent.Type.CHILD_UPDATED)) {
+						// TODO 经过测试这里的修改不包括给子节点添加子子节点或删除子子节点，但是包括修改Value值
 						System.out.printf("修改子节点, path:%s, data:%s\n", event.getData().getPath(), new String(event.getData().getData(), StandardCharsets.UTF_8));
 					}
 				}
 			});
-			System.in.read();
+
+			LockSupport.park();
 
 			// Curator还支持事物操作，即一组操作要么都成功，要么都失败
 			// 开启事务，这个已经过时了，新的貌似是用client.transaction()来操作，有需要的时候再看
