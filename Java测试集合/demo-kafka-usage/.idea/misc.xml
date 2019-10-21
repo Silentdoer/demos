@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="Kotlin2JsCompilerArguments">
+    <option name="sourceMapEmbedSources" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="PersistentConfig">
+    <option name="initConfig">
+      <map>
+        <entry key="initConfig">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoPackage" value="generator" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="daoTargetFolder" value="" />
+              <option name="modelPackage" value="generator" />
+              <option name="modelTargetFolder" value="" />
+              <option name="name" value="initConfig" />
+              <option name="needToStringHashcodeEquals" value="true" />
+              <option name="offsetLimit" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="projectFolder" value="" />
+              <option name="useExample" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlPackage" value="generator" />
+              <option name="xmlTargetFolder" value="" />
+            </Config>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>AccessibilityHTML</id>
+          </State>
+          <State>
+            <id>Android</id>
+          </State>
+          <State>
+            <id>Application Servers</id>
+          </State>
+          <State>
+            <id>Bidirectional TextInternationalizationLintAndroid</id>
+          </State>
+          <State>
+            <id>CorrectnessLintAndroid</id>
+          </State>
+          <State>
+            <id>Declaration redundancyJava</id>
+          </State>
+          <State>
+            <id>HTML</id>
+          </State>
+          <State>
+            <id>Hibernate</id>
+          </State>
+          <State>
+            <id>InternationalizationLintAndroid</id>
+          </State>
+          <State>
+            <id>Java</id>
+          </State>
+          <State>
+            <id>Java EE</id>
+          </State>
+          <State>
+            <id>JavaFX</id>
+          </State>
+          <State>
+            <id>LintAndroid</id>
+          </State>
+          <State>
+            <id>PerformanceLintAndroid</id>
+          </State>
+          <State>
+            <id>PortabilityJava</id>
+          </State>
+          <State>
+            <id>RELAX NG</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>RedundantThrows</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

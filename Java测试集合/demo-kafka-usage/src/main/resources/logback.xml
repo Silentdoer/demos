@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration scan="false" debug="false">
+
+	<!-- TODO 非dev环境用/tmp/gateway/demo-kafka-usage，dev环境可以用${user.dir}/logs/warn_nginx_plus -->
+	<property name="LOG_DIR" value="${user.dir}/logs/demo-kafka-usage"/>
+	<property name="LOG_PATTERN"
+			  value="[%-5level] %d{yyyy-MM-dd#HH:mm:ss.SSS} [Thread:%thread] [Logger:%logger] -> %msg%n"/>
+
+	<appender name="stdAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 如果是UTF-8的环境这句要注释掉 -->
+		<withJansi>true</withJansi>
+		<encoder>
+			<pattern>%highlight([%-5level]) %cyan(%d{yyyy-MM-dd#HH:mm:ss.SSS}) %yellow([Thread:%thread])
+				%magenta([Logger:%logger]) -> %msg%n
+			</pattern>
+			<charset>utf-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/log.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 按天归档，如果按小时后面加-hh -->
+			<fileNamePattern>${LOG_DIR}/history/%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<append>true</append>
+
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+			<charset>utf-8</charset>
+		</encoder>
+
+		<!-- 不写TRACE DEBUG -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<root level="INFO">
+		<!-- TODO prod 环境去掉std -->
+		<appender-ref ref="stdAppender"/>
+		<appender-ref ref="fileAppender"/>
+	</root>
+</configuration>
