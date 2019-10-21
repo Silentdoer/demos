@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Game</title>
+
+	<style rel="stylesheet">
+		* {
+			/*有的浏览器会有默认的margin和padding，这里将其取消全部由开发人员自定义*/
+			margin: 0;
+			padding: 0;
+			position: relative;
+		}
+
+		html {
+			/*这个最好显式的加上*/
+			font-size: 100%;
+			font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
+		}
+
+		body {
+			font-size: 1rem;
+		}
+
+		/*必须给div加上tabindex="0"，每个div的tabindex最好不同*/
+		div .card {
+			width: 7rem;
+			height: 10rem;
+			float: left;
+			border-radius: 0.5rem;
+			/*没有这个获得焦点后会有个长方形的边框，它和border-radius不一样*/
+			outline: none;
+			/*设置鼠标移动到这里时变成手的形状*/
+			cursor: pointer;
+			border: 0.05rem solid #b21f2d;
+		}
+
+		/* TODO 注意手机浏览器里不支持:hover，但是支持:focus */
+		div .card:hover {
+			/*设置鼠标移动到上面时往上提一点*/
+			top: -1rem;
+		}
+		div .card:focus {
+			top: -1rem;
+			color: #a71d2a;
+			/*选中后边框*/
+			border: 0.1rem solid black;
+		}
+
+		.card-line {
+			/*一行最多12张牌，然后11张会占用2rem，第一张占用7rem宽度，所以需要29rem*/
+			width: 29rem;
+			/*顺序是上右下左，如果是只有一个值代表四个方向，如果两个，则第一个代表上下，第二个代表左右*/
+			margin: 0 0 0 10rem;
+			position: absolute;
+			background-color: #3a8ee6;
+		}
+
+		.card .card-val {
+			top: 0.2rem;
+			left: 0.2rem;
+		}
+
+		.card img {
+			width: 0.8rem;
+			height: 0.8rem;
+			top: 0.05rem;
+			left: 0.2rem;
+		}
+
+		.right-card {
+			position: fixed;
+			float: right;
+			right: 8rem;
+			top: 10rem;
+			width: 4rem;
+			height: 4rem;
+			background-color: #3a8ee6;
+			border-radius: 0.5rem;
+		}
+		.right-card:hover {
+			background: #000;
+		}
+
+		/* 页面width >= 320 的设备 */
+		@media (min-width: 320px){
+			html {
+				/*但是貌似不会生效，因为Chrome默认最小的font-size貌似是12px，所以无法设置更小
+				不过留在这里，可能其他浏览器会用到，比如手机浏览器之类的*/
+				font-size: 25%;
+			}
+		}
+
+		/* 页面width >= 680 的设备 */
+		@media (min-width: 680px){
+			html {
+				font-size: 50%;
+			}
+		}
+
+		/* 页面width >= 1366 的设备，注意由于取的是min-width，所以大的width要在后面写 */
+		@media (min-width: 1366px) {
+			html {
+				font-size: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+<p>双房间了</p>
+<!-- container的position根据实际需要来决定是否是要absolute，注意其兄弟元素也必须是float和absolute才行
+ ，否则会相对兄弟节点进行定位-->
+<div id="card-container">
+	<div class="card-line">
+		<div class="card" style="background-color: #0c5460;position: absolute;z-index: 100;" tabindex="0">
+			<span class="card-val">K</span>
+		</div>
+		<!-- 这里通过margin的方式设置元素相对于card-container的左侧进行移位，
+		注意，由于card元素都是float，所以这里相对的是card-container来margin，但是正常情况下是相对兄弟元素来margin的 -->
+		<div class="card" style="background-color: #0000ff;position: absolute;z-index: 101;left: 2rem;" tabindex="0">
+			<span class="card-val">A<img src="hei_mei.png" alt="HM"></span>
+		</div>
+		<div class="card" style="background-color: #1c7430;position: absolute;z-index: 102;left: 4rem;" tabindex="0">
+			<span class="card-val">3</span>
+		</div>
+		<div class="card" style="background-color: #856404;position: absolute;z-index: 103;left: 6rem;" tabindex="0">
+			<span class="card-val">3</span>
+		</div>
+	</div>
+	<div class="card-line" style="top: 2rem;z-index: 111">
+		<div class="card" style="background-color: #0000ff;position: absolute;z-index: 100;" tabindex="0">
+			<span class="card-val">5</span>
+		</div>
+		<!-- 这里通过margin的方式设置元素相对于card-container的左侧进行移位，
+		注意，由于card元素都是float，所以这里相对的是card-container来margin，但是正常情况下是相对兄弟元素来margin的 -->
+		<div class="card" style="background-color: #6f42c1;position: absolute;z-index: 101;left: 2rem;" tabindex="0">
+			<span class="card-val">8</span>
+		</div>
+		<div class="card" style="background-color: #721c24;position: absolute;z-index: 102;left: 4rem;" tabindex="0">
+			<span class="card-val">4</span>
+		</div>
+		<div class="card" style="background-color: #6f42c1;position: absolute;z-index: 103;left: 6rem;" tabindex="0">
+			<span class="card-val">4</span>
+		</div>
+		<div class="card" style="background-color: #0000ff;position: absolute;z-index: 104;left: 8rem;" tabindex="0">
+			<span class="card-val">4</span>
+		</div>
+	</div>
+</div>
+<div class="right-card"></div>
+
+<script type="module">
+	import Mock from './js/mock.js';
+	Mock.show();
+</script>
+</body>
+</html>

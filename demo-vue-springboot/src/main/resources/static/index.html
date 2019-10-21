@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome to my home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1">
+	<link rel="stylesheet" href="element/css/index.css">
+	<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+<div id="app">
+	<el-menu mode="horizontal" theme="dark">
+		<el-menu-item index="1">View</el-menu-item>
+		<el-menu-item index="2">Post</el-menu-item>
+	</el-menu>
+	<div class="filter">
+		<span class="item-label">按日期过滤：</span>
+		<!-- v-model 是双向绑定，它绑定的是value属性，比如input组件的输入的内容就是其value属性值 -->
+		<el-date-picker v-model="filterDate" align="left" type="date">
+		</el-date-picker>
+		<!-- 修改了filterDate的value属性后触发此处的v-if判断，从而触发调用计算属性selectedRecords其返回的值过滤后为0条
+		又导致了下面的v-for循环重新计算不显示el-card；-->
+		<span class="item-label" v-if="filterDate">共找到 {{selectedRecords.length}} 条记录</span>
+	</div>
+	<div class="posts">
+		<el-card v-if="loadingPosts" v-loading="loadingPosts">
+			<div class="loading">正在加载数据中。。</div>
+		</el-card>
+		<template v-else>
+			<!-- :key是v-bind:key的缩写 -->
+			<el-card v-for="r in selectedRecords" :class="r.content.done?'single-post productStyle':'single-post'" :key="r.id">
+				<div slot="header" class="card-header">
+					<span class="name">{{r.name}}</span>
+					<span class="card-header-side">{{r.date.toDateString()}}</span>
+				</div>
+				<section>
+					<p class="item-label">DONE:</p>
+					<p class="done">{{r.content.done}}</p>
+					<p class="item-label">TODO:</p>
+					<p class="todo">{{r.content.todo}}</p>
+					<p class="item-label">PROBLEM:</p>
+					<p class="problem">{{r.content.problem}}</p>
+				</section>
+			</el-card>
+		</template>
+	</div>
+	<div class="new-post">
+		<el-card v-loading="postingNew">
+			<div slot="header" class="card-header">
+				<span>New Post</span>
+				<!-- @click是v-on:click的缩写 -->
+				<el-button type="primary" class="card-header-side" @click="newPost">Go!</el-button>
+			</div>
+			<el-form :model="payload" label-width="80px">
+				<el-form-item label="NAME">
+					<el-input v-model="payload.name"></el-input>
+				</el-form-item>
+				<el-form-item label="DONE">
+					<el-input v-model="payload.content.done"></el-input>
+				</el-form-item>
+				<el-form-item label="TODO">
+					<el-input v-model="payload.content.todo"></el-input>
+				</el-form-item>
+				<el-form-item label="PROBLEM">
+					<el-input type="textarea" v-model="payload.content.problem"></el-input>
+				</el-form-item>
+			</el-form>
+		</el-card>
+	</div>
+</div>
+
+<!-- 放到后面引入js，防止网页一直看不见【这里最多是不能点击那么快】 -->
+<script src="vue/js/vue.js"></script>
+<script src="element/js/index.js"></script>
+<script>
+	new Vue({
+		el: '#app'
+		, data() {
+			let urlPrefix;
+			switch (location.protocol) {
+				case 'file:':
+					urlPrefix = 'http://report.auto601.com';
+					break;
+				case 'http:':
+					urlPrefix = 'http://localhost:8080';
+					break;
+				case 'https:':
+					urlPrefix = ''
+			}
+			return {
+				urlPrefix,
+				filterDate: null,  // 用于过滤/api/dates查询出来的List<IndexRecord>
+				records: [],  // List<payload>
+				payload: {  // IndexRecord，它对应着index.html下面框的输入
+					name: '',
+					content: {
+						done: '',
+						todo: '',
+						problem: ''
+					}
+				},
+				loadingPosts: true,  // 用于标志是否需要loading显示
+				postingNew: false
+			};
+		}
+		, computed: {
+			selectedRecords() {
+				console.log("执行了一次");
+				if (!this.filterDate) {
+					return this.records;
+				} else {
+					const start = this.filterDate.getTime();
+					const end = this.filterDate.getTime() + 24 * 3600 * 1000;
+					return this.records.filter(i => i.date.getTime() <= end && i.date.getTime() >= start);
+				}
+			}
+		},
+		methods: {
+			clear() {
+				this.payload = {
+					name: '',
+					content: {
+						done: '',
+						todo: '',
+						problem: ''
+					}
+				};
+			}
+			, async getAll() {
+				this.loadingPosts = true;
+				try {
+					// fetch是浏览器自带的，默认是GET
+					this.records = await fetch(`${this.urlPrefix}/api/dates`)
+						.then(r => r.json())
+						.then(j => {
+							// r is List<IndexRecord> JSON String
+							// , j is List<IndexRecord> obj【JSON List】, i is a JSON Object【IndexRecord】
+							console.log(JSON.stringify(j));
+							j.forEach(i => i.date = new Date(i.date));
+							return j;
+						});
+				} catch (err) {
+					this.$message.error('Load failed!');
+				}
+				this.loadingPosts = false;
+			}
+			, async getMarkDown(text) {
+				return await fetch('https://api.github.com/markdown', {
+					method: 'POST',
+					body: JSON.stringify({text, mode: 'gfm'})
+				}).then(r => r.text());
+			}
+			, async newPost() {
+				this.postingNew = true;
+				const resp = await fetch(`${this.urlPrefix}/api/record`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json;charset=utf-8'
+					},
+					body: JSON.stringify(this.payload)
+				});
+				this.postingNew = false;
+				if (resp.status === 200) {
+					this.$message.success('Post Success!');
+					this.clear();
+				} else {
+					this.$message.error('Post Failed! Error code: ' + resp.status);
+				}
+				this.getAll();
+			}
+		}
+		, created() {
+			this.getAll();
+			this.payload.name = 'default';
+		}
+	});
+</script>
+</body>
+</html>

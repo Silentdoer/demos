@@ -1,0 +1,109 @@
+p, body {
+	margin: 0;
+	padding: 0;
+}
+
+#app {
+	position: absolute;
+	margin: auto;
+	right: 0;
+	left: 0;
+}
+
+.filter {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.el-card {
+	margin: 0.5rem;
+}
+
+.loading {
+	height: 150px;
+}
+
+.single-post {
+	min-width: 320px;
+}
+
+.card-header {
+	position: relative;
+}
+
+.card-header-side {
+	position: absolute;
+	right: -8px;
+	top: -8px;
+}
+
+span.card-header-side {
+	color: #48576a;
+	line-height: 36px;
+}
+
+.item-label {
+	color: #48576a;
+}
+
+.item-label:not(:first-child) {
+	margin-top: 1rem;
+}
+
+@media screen and (max-width: 700px) {
+	.filter {
+		margin: 0.5rem;
+	}
+
+	.filter .item-label {
+		display: inline-block;
+	}
+
+	.single-post {
+		min-width: initial;
+	}
+}
+
+@media screen and (min-width: 700px) {
+	.filter {
+		width: 700px;
+		margin-left: calc(50% - 340px);
+	}
+
+	.loading {
+		width: 320px;
+	}
+
+	.posts {
+		display: flex;
+		width: 100%;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.single-post {
+		max-width: 330px;
+	}
+
+	.new-post {
+		width: 600px;
+		left: calc(50% - 300px);
+		position: relative;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.filter {
+		width: 1200px;
+		margin-left: calc(50% - 600px);
+	}
+
+	.single-post {
+		max-width: 400px;
+	}
+
+	.new-post {
+		width: 700px;
+		left: calc(50% - 350px);
+	}
+}

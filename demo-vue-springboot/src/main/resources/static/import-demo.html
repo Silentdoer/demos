@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Import by browser</title>
+</head>
+<body>
+<div id="app">
+	<v-head v-if="ss"></v-head>
+	<p>啦啦啦</p>
+</div>
+
+<script src="./vue/js/vue.js"></script>
+<script type="module">
+	// 这种方式不行，因为vue里没有用export（即没有用到es6），所以必须以<script src的方式引入
+	//import Vue from './vue/js/vue.js';
+	import Mock from './js/mock.js';
+	// 由于html不支持大小写敏感，这里的vHead元素会变成v-head，为什么不直接写v-head，因为js又不支持这种命名
+	// 如果是全局注册则可以手动写出component名字
+	// TODO 经过测试不行，Xx.vue组件化依赖nodejs，但是可以将Xx.vue转换成js文件来调用
+	import vHead from './page/Header.js';
+
+	Mock.show();
+	Vue.component('v-head', vHead);
+
+	new Vue({
+		el: "#app",
+		data: {
+			ss: true
+		}
+	})
+</script>
+</body>
+</html>

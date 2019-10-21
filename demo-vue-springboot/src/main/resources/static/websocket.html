@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<title>WebSocket</title>
+</head>
+<body>
+Welcome<br/>
+<label for="text"></label><input id="text" type="text"/>
+<button onclick="send()">发送消息</button>
+<hr/>
+<button onclick="closeWebSocket()">关闭WebSocket连接</button>
+<hr/>
+<div id="message"></div>
+<p>
+	<button onclick="sendBinary()">发送二进制数据</button>
+	<label for="inp-msg"></label><textarea id="inp-msg" style="height: 50px;width: 500px"></textarea>
+	选择图片：<input type="file" id="send-pic">
+</p>
+</body>
+
+<script type="text/javascript">
+	let websocket = null;
+	//判断当前浏览器是否支持WebSocket
+	if (typeof (WebSocket) === 'undefined') {
+		alert('当前浏览器不支持WebSocket');
+	} else {
+		// TODO 注意，在new 后就会立刻去和服务端做websocket的连接请求
+		// 服务端显示客户端地址是：0:0:0:0:0:0:0:1:34924，由此可见这里确实创建了一个Socket对象（WebSocket）
+		// 它的第一次连接其实也是通过http请求告诉服务端请求升级为Socket连接，之后服务端和客户端通信就不再需要请求头这些
+		websocket = new WebSocket("ws://localhost:9933/websocket");
+
+		//连接发生错误的回调方法 TODO 经过测试发生错误会执行这里
+		websocket.onerror = function () {
+			setMessageInnerHTML("WebSocket连接发生错误");
+		};
+
+		//连接成功建立的回调方法 TODO 经过测试会执行这里
+		websocket.onopen = function () {
+			//可将 WebSocket 对象的 binaryType 属性设为“blob”或“arraybuffer”。默认格式为“blob”（您不必在发送时校正 binaryType 参数）。
+			//websocket.binaryType = "arraybuffer";
+			setMessageInnerHTML("WebSocket连接成功" + websocket.readyState);
+		};
+
+		//TODO 接收到消息的回调方法，重要
+		websocket.onmessage = function (event) {
+			if (event.data instanceof Blob) {
+				let reader = new FileReader();
+				reader.onload = function() {
+					// readAsText(..)后的数据
+					let content = reader.result;
+					console.log("收到二进制消息转成字符串：" + content);
+					setMessageInnerHTML(content);
+				};
+				reader.readAsText(event.data, "UTF-8");
+			} else {
+				setMessageInnerHTML(event.data);
+			}
+		};
+
+		//连接关闭的回调方法
+		websocket.onclose = function () {
+			setMessageInnerHTML("WebSocket连接关闭" + websocket.readyState);
+		};
+
+		//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+		window.onbeforeunload = function () {
+			closeWebSocket();
+		};
+
+		//将消息显示在网页上
+		function setMessageInnerHTML(innerHTML) {
+			document.getElementById('message').innerHTML += innerHTML + '<br/>';
+		}
+
+		//关闭WebSocket连接 TODO Socket关闭后不支持重新打开，如果要重连接需要new一个新的
+		// TODO 可以通过websocket.readyState来判断socket的状态，
+		/*
+		 0 - 表示连接尚未建立。
+
+		 1 - 表示连接已建立，可以进行通信。
+
+		 2 - 表示连接正在进行关闭。
+
+		 3 - 表示连接已经关闭或者连接不能打开。
+		 */
+		function closeWebSocket() {
+			websocket.close();
+		}
+
+		//TODO 发送消息，经过测试服务端可以收到这个消息
+		function send() {
+			console.log(websocket.readyState + "eeeee");
+			let message = document.getElementById('text').value;
+			websocket.send(message);
+		}
+
+		function sendBinary() {
+			let bytes = new Uint8Array(1024);
+			// 注意值范围是0-255
+			bytes[0] = 33;
+			bytes[1] = 44;
+			bytes[2] = 99;
+			// 这里默认用的就是UTF-8编码，但是还不清楚在哪里改编码
+			let blob = new Blob(["hello, worlds是否4"]);
+			// 取blob对象第一个字节生成一个新的blob【比如第一个字节是元数据】
+			//let firstByteBlob = blob.slice(0,1);
+			websocket.send(new Blob([bytes]));
+		}
+	}
+</script>
+</html>
