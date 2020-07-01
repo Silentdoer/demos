@@ -32,7 +32,7 @@
         <!-- mysqlconnector所需jar的Group -->
         <mysql.group>mysql</mysql.group>
         <!-- 用于表示MySQL-Connector的版本 -->
-        <mysql-connector.version>5.1.41</mysql-connector.version>
+        <mysql-connector.version>8.0.16</mysql-connector.version>
 
         <!-- 阿里巴巴的Group名 -->
         <ali.group>com.alibaba</ali.group>
