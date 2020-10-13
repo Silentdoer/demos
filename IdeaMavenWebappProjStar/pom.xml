@@ -44,7 +44,7 @@
         <!-- JUnit4所需jar的Group -->
         <junit.group>junit</junit.group>
         <!-- 单元测试所需jar的版本 -->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
 
         <!-- log4j的Group -->
         <log4j.group>log4j</log4j.group>
