@@ -63,7 +63,7 @@
 
         <!-- 另一种Jackson的Group -->
         <fstjackson.group>com.fasterxml.jackson.core</fstjackson.group>
-        <fstjackson.version>2.7.0</fstjackson.version>
+        <fstjackson.version>2.12.1</fstjackson.version>
 
         <!-- spring用aop所需的aspectj所需包 -->
         <aspectj.group>org.aspectj</aspectj.group>
