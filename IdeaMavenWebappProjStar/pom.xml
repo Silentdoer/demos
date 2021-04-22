@@ -25,7 +25,7 @@
         <!-- 用于表示MyBatis相关的Group -->
         <mybatis.group>org.mybatis</mybatis.group>
         <!-- 用于表示MyBatis的通用版本 -->
-        <mybatis.version>3.2.8</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <!-- 用于表示MyBatis-Spring的版本 -->
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
 
