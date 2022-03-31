@@ -10,7 +10,7 @@
 
     <properties>
         <springbootgp>org.springframework.boot</springbootgp>
-        <springbootver>2.0.1.RELEASE</springbootver>
+        <springbootver>2.5.12</springbootver>
     </properties>
 
     <dependencies>
