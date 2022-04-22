@@ -20,7 +20,7 @@
         <!-- 用于表示SpringMVC的Group -->
         <spring.group>org.springframework</spring.group>
         <!-- 用于表示SpringMVC相关的通用版本 -->
-        <spring.version>4.3.4.RELEASE</spring.version>
+        <spring.version>5.3.19</spring.version>
 
         <!-- 用于表示MyBatis相关的Group -->
         <mybatis.group>org.mybatis</mybatis.group>
