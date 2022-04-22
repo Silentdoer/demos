@@ -10,7 +10,7 @@
 
     <properties>
         <spring.group>org.springframework</spring.group>
-        <spring.version>4.3.4.RELEASE</spring.version>
+        <spring.version>5.3.19</spring.version>
 
         <logback.group>ch.qos.logback</logback.group>
         <logback.version>1.2.3</logback.version>
