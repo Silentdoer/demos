@@ -45,7 +45,7 @@
 
         <alibaba.group>com.alibaba</alibaba.group>
         <druid.version>1.1.6</druid.version>
-        <fastjson.version>1.2.41</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
 
         <dom4j.group>dom4j</dom4j.group>
         <dom4j.version>1.6.1</dom4j.version>
